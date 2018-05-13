@@ -317,6 +317,14 @@ std::string Route::buildReport() const
     return report;
 }
 
+/*
+ * Few things you can change
+ * 1. remove using namespaces
+ * 2. change variable names and add comments to make the code easy to understand
+ * 3. add spaces between lines and spread the code out a little where neccessary
+ * 4. the code where you "getElement" and "getElementContent" can be coded in the same line. e.g. source = getElementContent(getElement(source, "gpx"))
+*/
+
 Route::Route(std::string source, bool isFileName, metres granularity)
 {
     using namespace std;
@@ -324,8 +332,14 @@ Route::Route(std::string source, bool isFileName, metres granularity)
     string lat,lon,ele,name,temp,temp2;
     metres deltaH,deltaV;
     ostringstream oss,oss2;
-    unsigned int num;
+    unsigned int num = 0;
     this->granularity = granularity;
+    /*
+     * After checking the "isFileName" boolean is true it checks to see if the log file is open
+     * if it's not open, it will thow "invalid_argument" with the error message
+     * if it is open, it will loop through the file and add the content to the varible "oss2" output string stream
+     * then converts it to a string and stores it in the "source" variable
+     */
     if (isFileName){
         ifstream fs(source);
         if (! fs.good()) throw invalid_argument("Error opening source file '" + source + "'.");
@@ -336,18 +350,28 @@ Route::Route(std::string source, bool isFileName, metres granularity)
         }
         source = oss2.str();
     }
+    /*
+     * checks to see if the "gpx" element exists in the log file
+     * if it doesn't it will throw "domain_error" and an error message
+     * if it does, then it will use the "getElement" function to get everything between the "gpx" element tags and store it in temp variable
+     * then use the "getElementContent" to get all the content of the log file
+     * repeat for the "rte" element
+     */
     if (! elementExists(source,"gpx")) throw domain_error("No 'gpx' element.");
     temp = getElement(source, "gpx");
     source = getElementContent(temp);
     if (! elementExists(source,"rte")) throw domain_error("No 'rte' element.");
     temp = getElement(source, "rte");
     source = getElementContent(temp);
+    /*
+     *I kind of get this but not sure how to explain it in detail
+     */
     if (elementExists(source, "name")) {
         temp = getAndEraseElement(source, "name");
         routeName = getElementContent(temp);
         oss << "Route name is: " << routeName << endl;
     }
-    num = 0;
+
     if (! elementExists(source,"rtept")) throw domain_error("No 'rtept' element.");
     temp = getAndEraseElement(source, "rtept");
     if (! attributeExists(temp,"lat")) throw domain_error("No 'lat' attribute.");
