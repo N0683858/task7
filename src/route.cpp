@@ -343,13 +343,10 @@ Route::Route(string source, bool isFileName, metres granularity)
     unsigned int num = 0;
     this->granularity = granularity;
     /*
-     * If the "source" variable is a filename, the function get x is called to get the correct x
-     * If not then "source" variable is used as the x.
+     * If the "source" variable is a filename, the function getGPXFromFile is called to get the apropriate GPX log from the file
+     * If not then "source" variable is used as the GPX log.
      */
-    if (isFileName)
-    {
-        source = getGPXFromFile(source, reportStream);
-    }
+    string GPXData = isFileName ? getGPXFromFile(source, reportStream) : source;
     /*
      * Checks to see if the "gpx" element exists in the log file
      * if it doesn't it will throw "domain_error" and an error message
@@ -357,25 +354,25 @@ Route::Route(string source, bool isFileName, metres granularity)
      * then use the "getElementContent" to get all the content of the log file
      * repeat for the "rte" element
      */
-    if (!elementExists(source,"gpx"))
+    if (!elementExists(GPXData,"gpx"))
     {
         throw domain_error("No 'gpx' element.");
     }
-    source = getElementContent(getElement(source, "gpx"));
-    if (!elementExists(source,"rte"))
+    GPXData = getElementContent(getElement(GPXData, "gpx"));
+    if (!elementExists(GPXData,"rte"))
     {
         throw domain_error("No 'rte' element.");
     }
-    source = getElementContent(getElement(source, "rte"));
+    GPXData = getElementContent(getElement(GPXData, "rte"));
 
-    if (elementExists(source, "name"))
+    if (elementExists(GPXData, "name"))
     {
-        routeName = getElementContent(getAndEraseElement(source, "name"));
+        routeName = getElementContent(getAndEraseElement(GPXData, "name"));
         reportStream << "Route name is: " << routeName << endl;
     }
 
-    if (! elementExists(source,"rtept")) throw domain_error("No 'rtept' element.");
-    temp = getAndEraseElement(source, "rtept");
+    if (! elementExists(GPXData,"rtept")) throw domain_error("No 'rtept' element.");
+    temp = getAndEraseElement(GPXData, "rtept");
     if (! attributeExists(temp,"lat")) throw domain_error("No 'lat' attribute.");
     if (! attributeExists(temp,"lon")) throw domain_error("No 'lon' attribute.");
     lat = getElementAttribute(temp, "lat");
@@ -398,8 +395,8 @@ Route::Route(string source, bool isFileName, metres granularity)
     }
     positionNames.push_back(name);
     Position prevPos = positions.back(), nextPos = positions.back();
-    while (elementExists(source, "rtept")) {
-        temp = getAndEraseElement(source, "rtept");
+    while (elementExists(GPXData, "rtept")) {
+        temp = getAndEraseElement(GPXData, "rtept");
         if (! attributeExists(temp,"lat")) throw domain_error("No 'lat' attribute.");
         if (! attributeExists(temp,"lon")) throw domain_error("No 'lon' attribute.");
         lat = getElementAttribute(temp, "lat");
