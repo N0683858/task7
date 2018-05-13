@@ -3,3 +3,5 @@
 build/*
 execs/*
 Makefile
+*.user
+GPX.pro.user
