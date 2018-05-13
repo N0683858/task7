@@ -108,6 +108,12 @@ namespace GPS
        * "granularity" metres apart (horizontally).
        */
       bool areSameLocation(const Position &, const Position &) const;
+
+      /*
+      Function that takes a filename and returns a string that is the GPX data
+      in that file, and adds to a report stream
+      */
+      std::string getGPXFromFile(std::string fileName, std::ostringstream& report);
   };
 }
 

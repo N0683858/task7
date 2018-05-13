@@ -322,7 +322,6 @@ string Route::buildReport() const
 
 /*
  * Few things you can change
- * 1. remove using namespaces
  * 2. change variable names and add comments to make the code easy to understand
  * 3. add spaces between lines and spread the code out a little where neccessary
  * 4. the code where you "getElement" and "getElementContent" can be coded in the same line. e.g. source = getElementContent(getElement(source, "gpx"))
@@ -332,36 +331,34 @@ Route::Route(string source, bool isFileName, metres granularity)
 {
     string lat,lon,ele,name,temp,temp2;
     metres deltaH,deltaV;
-    ostringstream oss,oss2;
+    ostringstream reportStream;
     unsigned int num = 0;
     this->granularity = granularity;
     /*
-     * After checking the "isFileName" boolean is true it checks to see if the log file is open
-     * if it's not open, it will thow "invalid_argument" with the error message
-     * if it is open, it will loop through the file and add the content to the varible "oss2" output string stream
-     * then converts it to a string and stores it in the "source" variable
+     * If the "source" variable is a filename, the function get x is called to get the correct x
+     * If not then "source" variable is used as the x.
      */
-    if (isFileName){
-        ifstream fs(source);
-        if (! fs.good()) throw invalid_argument("Error opening source file '" + source + "'.");
-        oss << "Source file '" << source << "' opened okay." << endl;
-        while (fs.good()) {
-            getline(fs, temp);
-            oss2 << temp << endl;
-        }
-        source = oss2.str();
+    if (isFileName)
+    {
+        source = getGPXFromFile(source, reportStream);
     }
     /*
-     * checks to see if the "gpx" element exists in the log file
+     * Checks to see if the "gpx" element exists in the log file
      * if it doesn't it will throw "domain_error" and an error message
      * if it does, then it will use the "getElement" function to get everything between the "gpx" element tags and store it in temp variable
      * then use the "getElementContent" to get all the content of the log file
      * repeat for the "rte" element
      */
-    if (! elementExists(source,"gpx")) throw domain_error("No 'gpx' element.");
+    if (!elementExists(source,"gpx"))
+    {
+        throw domain_error("No 'gpx' element.");
+    }
     temp = getElement(source, "gpx");
     source = getElementContent(temp);
-    if (! elementExists(source,"rte")) throw domain_error("No 'rte' element.");
+    if (!elementExists(source,"rte"))
+    {
+        throw domain_error("No 'rte' element.");
+    }
     temp = getElement(source, "rte");
     source = getElementContent(temp);
     /*
@@ -370,7 +367,7 @@ Route::Route(string source, bool isFileName, metres granularity)
     if (elementExists(source, "name")) {
         temp = getAndEraseElement(source, "name");
         routeName = getElementContent(temp);
-        oss << "Route name is: " << routeName << endl;
+        reportStream << "Route name is: " << routeName << endl;
     }
 
     if (! elementExists(source,"rtept")) throw domain_error("No 'rtept' element.");
@@ -385,12 +382,12 @@ Route::Route(string source, bool isFileName, metres granularity)
         ele = getElementContent(temp2);
         Position startPos = Position(lat,lon,ele);
         positions.push_back(startPos);
-        oss << "Position added: " << startPos.toString() << endl;
+        reportStream << "Position added: " << startPos.toString() << endl;
         ++num;
     } else {
         Position startPos = Position(lat,lon);
         positions.push_back(startPos);
-        oss << "Position added: " << startPos.toString() << endl;
+        reportStream << "Position added: " << startPos.toString() << endl;
         ++num;
     }
     if (elementExists(temp,"name")) {
@@ -411,7 +408,7 @@ Route::Route(string source, bool isFileName, metres granularity)
             ele = getElementContent(temp2);
             nextPos = Position(lat,lon,ele);
         } else nextPos = Position(lat,lon);
-        if (areSameLocation(nextPos, prevPos)) oss << "Position ignored: " << nextPos.toString() << endl;
+        if (areSameLocation(nextPos, prevPos)) reportStream << "Position ignored: " << nextPos.toString() << endl;
         else {
             if (elementExists(temp,"name")) {
                 temp2 = getElement(temp,"name");
@@ -419,19 +416,38 @@ Route::Route(string source, bool isFileName, metres granularity)
             } else name = ""; // Fixed bug by adding this.
             positions.push_back(nextPos);
             positionNames.push_back(name);
-            oss << "Position added: " << nextPos.toString() << endl;
+            reportStream << "Position added: " << nextPos.toString() << endl;
             ++num;
             prevPos = nextPos;
         }
     }
-    oss << num << " positions added." << endl;
+    reportStream << num << " positions added." << endl;
     routeLength = 0;
     for (unsigned int i = 1; i < num; ++i ) {
         deltaH = distanceBetween(positions[i-1], positions[i]);
         deltaV = positions[i-1].elevation() - positions[i].elevation();
         routeLength += sqrt(pow(deltaH,2) + pow(deltaV,2));
     }
-    report = oss.str();
+    report = reportStream.str();
+}
+
+string Route::getGPXFromFile(string fileName, ostringstream& report)
+{
+    ostringstream parserStream;
+    ifstream fileIn(fileName);
+    string parser;
+    if (!fileIn.good())
+    {
+        throw invalid_argument("Error opening source file '" + fileName + "'.");
+    }
+    report << "Source file '" << fileName << "' opened okay." << endl;
+    while (fileIn.good())
+    {
+        getline(fileIn, parser);
+        parserStream << parser << endl;
+    }
+    fileIn.close();
+    return parserStream.str();
 }
 
 void Route::setGranularity(metres granularity)

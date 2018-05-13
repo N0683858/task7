@@ -60,15 +60,15 @@ namespace GPS
 
   string Position::toString(bool includeElevation) const
   {
-      std::ostringstream oss;
+      std::ostringstream report;
 
-      oss << "lat=\""  << lat  << "\"";
-      oss << " lon=\"" << lon << "\"";
+      report << "lat=\""  << lat  << "\"";
+      report << " lon=\"" << lon << "\"";
       if (includeElevation) {
-          oss << " ele=\"" << ele << "\"";
+          report << " ele=\"" << ele << "\"";
       }
 
-      return oss.str();
+      return report.str();
   }
 
   degrees ddmTodd(const string & ddmStr)
