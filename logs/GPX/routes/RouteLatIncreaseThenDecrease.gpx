@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<gpx version="1.1" creator="NTU" xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+    <rte>
+        <name>OJEJOTY</name>
+        <rtept lat="35" lon="29.2193">
+            <name>O</name>
+            <ele>14.000000</ele>
+        </rtept>
+        <rtept lat="35.09" lon="29.2193">
+            <name>J</name>
+            <ele>14.000000</ele>
+        </rtept>
+        <rtept lat="35.18" lon="29.2193">
+            <name>E</name>
+            <ele>14.000000</ele>
+        </rtept>
+        <rtept lat="35.09" lon="29.2193">
+            <name>J</name>
+            <ele>14.000000</ele>
+        </rtept>
+        <rtept lat="35" lon="29.2193">
+            <name>O</name>
+            <ele>14.000000</ele>
+        </rtept>
+        <rtept lat="34.91" lon="29.2193">
+            <name>T</name>
+            <ele>14.000000</ele>
+        </rtept>
+        <rtept lat="34.82" lon="29.2193">
+            <name>Y</name>
+            <ele>14.000000</ele>
+        </rtept>
+    </rte>
+</gpx>

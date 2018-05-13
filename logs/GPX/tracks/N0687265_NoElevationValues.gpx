@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<gpx version="1.1" creator="NTU" xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+    <trk>
+        <name>N0687265_NoElevationValues</name>
+        <trkseg>
+            <name>M-S</name>
+            <trkpt lat="52.9581" lon="-1.15424">
+                <ele>53.000000</ele>
+                <time>0</time>
+            </trkpt>
+            <trkpt lat="52.9577" lon="-1.15349">
+                <ele>53.000000</ele>
+                <time>1</time>
+            </trkpt>
+            <trkpt lat="52.9572" lon="-1.15275">
+                <ele>53.000000</ele>
+                <time>2</time>
+            </trkpt>
+            <trkpt lat="52.9568" lon="-1.152">
+                <ele>53.000000</ele>
+                <time>3</time>
+            </trkpt>
+            <trkpt lat="52.9563" lon="-1.15125">
+                <ele>53.000000</ele>
+                <time>4</time>
+            </trkpt>
+            <trkpt lat="52.9559" lon="-1.15051">
+                <ele>53.000000</ele>
+                <time>5</time>
+            </trkpt>
+            <trkpt lat="52.9554" lon="-1.14976">
+                <ele>53.000000</ele>
+                <time>6</time>
+            </trkpt>
+            <trkpt lat="52.955" lon="-1.14902">
+                <ele>53.000000</ele>
+                <time>7</time>
+            </trkpt>
+            <trkpt lat="52.9545" lon="-1.14827">
+                <ele>53.000000</ele>
+                <time>8</time>
+            </trkpt>
+            <trkpt lat="52.9541" lon="-1.14753">
+                <ele>53.000000</ele>
+                <time>9</time>
+            </trkpt>
+            <trkpt lat="52.9536" lon="-1.14678">
+                <ele>53.000000</ele>
+                <time>10</time>
+            </trkpt>
+        </trkseg>
+        <trkseg>
+            <name>S-Y</name>
+            <trkpt lat="52.9536" lon="-1.14678">
+                <ele>53.000000</ele>
+                <time>10</time>
+            </trkpt>
+            <trkpt lat="52.9535" lon="-1.14653">
+                <ele>53.000000</ele>
+                <time>11</time>
+            </trkpt>
+            <trkpt lat="52.9533" lon="-1.14628">
+                <ele>53.000000</ele>
+                <time>12</time>
+            </trkpt>
+            <trkpt lat="52.9532" lon="-1.14603">
+                <ele>53.000000</ele>
+                <time>13</time>
+            </trkpt>
+            <trkpt lat="52.953" lon="-1.14579">
+                <ele>53.000000</ele>
+                <time>14</time>
+            </trkpt>
+            <trkpt lat="52.9529" lon="-1.14554">
+                <ele>53.000000</ele>
+                <time>15</time>
+            </trkpt>
+            <trkpt lat="52.9527" lon="-1.14529">
+                <ele>53.000000</ele>
+                <time>16</time>
+            </trkpt>
+            <trkpt lat="52.9526" lon="-1.14504">
+                <ele>53.000000</ele>
+                <time>17</time>
+            </trkpt>
+            <trkpt lat="52.9524" lon="-1.14479">
+                <ele>53.000000</ele>
+                <time>18</time>
+            </trkpt>
+            <trkpt lat="52.9523" lon="-1.14454">
+                <ele>53.000000</ele>
+                <time>19</time>
+            </trkpt>
+            <trkpt lat="52.9521" lon="-1.14429">
+                <ele>53.000000</ele>
+                <time>20</time>
+            </trkpt>
+            <trkpt lat="52.952" lon="-1.14405">
+                <ele>53.000000</ele>
+                <time>21</time>
+            </trkpt>
+            <trkpt lat="52.9518" lon="-1.1438">
+                <ele>53.000000</ele>
+                <time>22</time>
+            </trkpt>
+            <trkpt lat="52.9517" lon="-1.14355">
+                <ele>53.000000</ele>
+                <time>23</time>
+            </trkpt>
+            <trkpt lat="52.9515" lon="-1.1433">
+                <ele>53.000000</ele>
+                <time>24</time>
+            </trkpt>
+            <trkpt lat="52.9514" lon="-1.14305">
+                <ele>53.000000</ele>
+                <time>25</time>
+            </trkpt>
+            <trkpt lat="52.9512" lon="-1.1428">
+                <ele>53.000000</ele>
+                <time>26</time>
+            </trkpt>
+            <trkpt lat="52.9511" lon="-1.14256">
+                <ele>53.000000</ele>
+                <time>27</time>
+            </trkpt>
+            <trkpt lat="52.9509" lon="-1.14231">
+                <ele>53.000000</ele>
+                <time>28</time>
+            </trkpt>
+            <trkpt lat="52.9508" lon="-1.14206">
+                <ele>53.000000</ele>
+                <time>29</time>
+            </trkpt>
+            <trkpt lat="52.9506" lon="-1.14181">
+                <ele>53.000000</ele>
+                <time>30</time>
+            </trkpt>
+            <trkpt lat="52.9505" lon="-1.14156">
+                <ele>53.000000</ele>
+                <time>31</time>
+            </trkpt>
+            <trkpt lat="52.9503" lon="-1.14131">
+                <ele>53.000000</ele>
+                <time>32</time>
+            </trkpt>
+            <trkpt lat="52.9502" lon="-1.14106">
+                <ele>53.000000</ele>
+                <time>33</time>
+            </trkpt>
+            <trkpt lat="52.95" lon="-1.14082">
+                <ele>53.000000</ele>
+                <time>34</time>
+            </trkpt>
+            <trkpt lat="52.9499" lon="-1.14057">
+                <ele>53.000000</ele>
+                <time>35</time>
+            </trkpt>
+            <trkpt lat="52.9497" lon="-1.14032">
+                <ele>53.000000</ele>
+                <time>36</time>
+            </trkpt>
+            <trkpt lat="52.9496" lon="-1.14007">
+                <ele>53.000000</ele>
+                <time>37</time>
+            </trkpt>
+            <trkpt lat="52.9494" lon="-1.13982">
+                <ele>53.000000</ele>
+                <time>38</time>
+            </trkpt>
+            <trkpt lat="52.9493" lon="-1.13957">
+                <ele>53.000000</ele>
+                <time>39</time>
+            </trkpt>
+            <trkpt lat="52.9491" lon="-1.13932">
+                <ele>53.000000</ele>
+                <time>40</time>
+            </trkpt>
+        </trkseg>
+    </trk>
+</gpx>

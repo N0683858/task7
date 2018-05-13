@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<gpx version="1.1" creator="NTU" xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+    <rte>
+        <name>MHC</name>
+        <rtept lat="53.0233" lon="-2.19936">
+            <name>M</name>
+            <ele>120.000000</ele>
+        </rtept>
+        <rtept lat="53.0323" lon="-2.19936">
+            <name>H</name>
+            <ele>119.999999</ele>
+        </rtept>
+        <rtept lat="53.0413" lon="-2.19936">
+            <name>C</name>
+            <ele>119.999998</ele>
+        </rtept>
+    </rte>
+</gpx>

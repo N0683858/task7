@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<gpx version="1.1" creator="www.gpxcreator.com" xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+
+<metadata>
+<name><![CDATA[n0695913_granularityall]]></name>
+<link href="http://www.gpxcreator.com"><text>GPX Creator</text></link>
+<time>2018-03-29T14:54:47Z</time>
+<bounds minlat="52.99523440" minlon="-1.13947749" maxlat="53.00243067" maxlon="-1.13214433"></bounds>
+</metadata>
+
+<rte>
+<name><![CDATA[n0695913_granularityall]]></name>
+<rtept lat="52.99824994" lon="-1.13414526">
+<ele>0.000000</ele>
+</rtept>
+<rtept lat="52.99823380" lon="-1.13410234">
+<ele>0.000000</ele>
+</rtept>
+<rtept lat="52.99822089" lon="-1.13404870">
+<ele>0.000000</ele>
+</rtept>
+<rtept lat="52.99813049" lon="-1.13378584">
+<ele>0.000000</ele>
+</rtept>
+<rtept lat="52.99803686" lon="-1.13350153">
+<ele>0.000000</ele>
+</rtept>
+<rtept lat="52.99779149" lon="-1.13214433">
+<ele>0.000000</ele>
+</rtept>
+<rtept lat="52.99707797" lon="-1.13224089">
+<ele>0.000000</ele>
+</rtept>
+<rtept lat="52.99523440" lon="-1.13404334">
+<ele>0.000000</ele>
+</rtept>
+<rtept lat="52.99581234" lon="-1.13947749">
+<ele>0.000000</ele>
+</rtept>
+<rtept lat="52.99530220" lon="-1.13802910">
+<ele>0.000000</ele>
+</rtept>
+<rtept lat="53.00243067" lon="-1.13921463">
+<ele>0.000000</ele>
+</rtept>
+</rte>
+
+</gpx>

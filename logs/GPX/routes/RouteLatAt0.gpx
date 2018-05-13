@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<gpx version="1.1" creator="NTU" xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+    <rte>
+        <name>UVQLRX</name>
+        <rtept lat="-17.9964" lon="30.0338">
+            <name>U</name>
+            <ele>-9.000000</ele>
+        </rtept>
+        <rtept lat="-17.9964" lon="39.0169">
+            <name>V</name>
+            <ele>-9.000000</ele>
+        </rtept>
+        <rtept lat="-8.9982" lon="39.0169">
+            <name>Q</name>
+            <ele>1.000000</ele>
+        </rtept>
+        <rtept lat="0" lon="39.0169">
+            <name>L</name>
+            <ele>1.000000</ele>
+        </rtept>
+        <rtept lat="-8.9982" lon="48">
+            <name>R</name>
+            <ele>1.000000</ele>
+        </rtept>
+        <rtept lat="-17.9964" lon="56.9831">
+            <name>X</name>
+            <ele>-9.000000</ele>
+        </rtept>
+    </rte>
+</gpx>

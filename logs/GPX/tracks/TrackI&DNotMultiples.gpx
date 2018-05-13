@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<gpx version="1.1" creator="NTU" xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+    <trk>
+        <name>TrackI&DNotMultiples</name>
+        <trkseg>
+            <name>M-A</name>
+            <trkpt lat="0" lon="109.322">
+                <ele>0.000000</ele>
+                <time>0</time>
+            </trkpt>
+            <trkpt lat="0.0257091" lon="109.296">
+                <ele>0.000000</ele>
+                <time>3</time>
+            </trkpt>
+            <trkpt lat="0.0514183" lon="109.271">
+                <ele>0.000000</ele>
+                <time>6</time>
+            </trkpt>
+            <trkpt lat="0.0771274" lon="109.245">
+                <ele>0.000000</ele>
+                <time>9</time>
+            </trkpt>
+            <trkpt lat="0.102837" lon="109.219">
+                <ele>0.000000</ele>
+                <time>12</time>
+            </trkpt>
+            <trkpt lat="0.128546" lon="109.194">
+                <ele>0.000000</ele>
+                <time>15</time>
+            </trkpt>
+            <trkpt lat="0.154255" lon="109.168">
+                <ele>0.000000</ele>
+                <time>18</time>
+            </trkpt>
+            <trkpt lat="0.179964" lon="109.142">
+                <ele>0.000000</ele>
+                <time>21</time>
+            </trkpt>
+        </trkseg>
+        <trkseg>
+            <name>A-G</name>
+            <trkpt lat="0.179964" lon="109.142">
+                <ele>0.000000</ele>
+                <time>21</time>
+            </trkpt>
+            <trkpt lat="0.157469" lon="109.165">
+                <ele>0.000000</ele>
+                <time>24</time>
+            </trkpt>
+            <trkpt lat="0.134973" lon="109.187">
+                <ele>0.000000</ele>
+                <time>27</time>
+            </trkpt>
+            <trkpt lat="0.112478" lon="109.21">
+                <ele>0.000000</ele>
+                <time>30</time>
+            </trkpt>
+            <trkpt lat="0.089982" lon="109.232">
+                <ele>0.000000</ele>
+                <time>33</time>
+            </trkpt>
+        </trkseg>
+    </trk>
+</gpx>

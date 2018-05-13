@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<gpx version="1.1" creator="NTU" xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+    <rte>
+        <rtept lat="10.18" lon="1.61757">
+            <name>A</name>
+            <ele>1.000000</ele>
+        </rtept>
+        <rtept lat="10.18" lon="1.70878">
+            <name>B</name>
+            <ele>1.000000</ele>
+        </rtept>
+        <rtept lat="9.91002" lon="1.89122">
+            <name>S</name>
+            <ele>2.000000</ele>
+        </rtept>
+    </rte>
+</gpx>

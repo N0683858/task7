@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<gpx version="1.1" creator="NTU" xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+    <rte>
+        <name>N0692013_correctHorizontalRoute</name>
+        <rtept lat="50" lon="50.2795">
+            <name>O</name>
+            <ele>0.000000</ele>
+        </rtept>
+        <rtept lat="50" lon="50.1398">
+            <name>N</name>
+            <ele>0.000000</ele>
+        </rtept>
+        <rtept lat="50" lon="50">
+            <name>M</name>
+            <ele>0.000000</ele>
+        </rtept>
+        <rtept lat="50" lon="49.8602">
+            <name>L</name>
+            <ele>0.000000</ele>
+        </rtept>
+        <rtept lat="50" lon="49.7205">
+            <name>K</name>
+            <ele>0.000000</ele>
+        </rtept>
+    </rte>
+</gpx>

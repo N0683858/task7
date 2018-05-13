@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<gpx version="1.1" creator="NTU" xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+    <rte>
+        <name>WRMHC</name>
+        <rtept lat="51.4688" lon="0">
+            <name>W</name>
+            <ele>40.000000</ele>
+        </rtept>
+        <rtept lat="51.4733" lon="0">
+            <name>R</name>
+            <ele>40.000000</ele>
+        </rtept>
+        <rtept lat="51.4778" lon="0">
+            <name>M</name>
+            <ele>40.000000</ele>
+        </rtept>
+        <rtept lat="51.4823" lon="0">
+            <name>H</name>
+            <ele>40.000000</ele>
+        </rtept>
+        <rtept lat="51.4868" lon="0">
+            <name>C</name>
+            <ele>40.000000</ele>
+        </rtept>
+    </rte>
+</gpx>

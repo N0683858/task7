@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<gpx version="1.1" creator="NTU" xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+    <rte>
+        <name>PositiveElevationTest</name>
+        <rtept lat="27.9861" lon="86.9226">
+            <name>M</name>
+            <ele>8495.000000</ele>
+        </rtept>
+        <rtept lat="27.9861" lon="86.9277">
+            <name>N</name>
+            <ele>7219.455500</ele>
+        </rtept>
+        <rtept lat="27.9861" lon="86.9328">
+            <name>O</name>
+            <ele>5943.911000</ele>
+        </rtept>
+        <rtept lat="27.9906" lon="86.9277">
+            <name>I</name>
+            <ele>7219.455500</ele>
+        </rtept>
+        <rtept lat="27.9951" lon="86.9226">
+            <name>C</name>
+            <ele>5943.911000</ele>
+        </rtept>
+        <rtept lat="27.9951" lon="86.9175">
+            <name>B</name>
+            <ele>5943.911000</ele>
+        </rtept>
+        <rtept lat="27.9951" lon="86.9125">
+            <name>A</name>
+            <ele>5943.911000</ele>
+        </rtept>
+    </rte>
+</gpx>

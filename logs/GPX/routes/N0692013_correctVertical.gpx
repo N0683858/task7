@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<gpx version="1.1" creator="NTU" xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+    <rte>
+        <name>N0692013_correctVertical</name>
+        <rtept lat="25.009" lon="25">
+            <name>C</name>
+            <ele>0.000000</ele>
+        </rtept>
+        <rtept lat="25.0045" lon="25">
+            <name>H</name>
+            <ele>0.000000</ele>
+        </rtept>
+        <rtept lat="25" lon="25">
+            <name>M</name>
+            <ele>0.000000</ele>
+        </rtept>
+        <rtept lat="24.9955" lon="25">
+            <name>R</name>
+            <ele>0.000000</ele>
+        </rtept>
+        <rtept lat="24.991" lon="25">
+            <name>W</name>
+            <ele>0.000000</ele>
+        </rtept>
+    </rte>
+</gpx>
+
+
+

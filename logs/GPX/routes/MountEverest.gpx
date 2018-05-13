@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<gpx version="1.1" creator="Lorna" xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+    <rte>
+        <name>MOuntEverest</name>
+        <rtept lat="27.986065" lon="86.922623">
+            <name>A</name>
+            <ele>8848</ele>
+        </rtept>
+        <rtept lat="27.9860" lon="86.93">
+            <name>B</name>
+            <ele>8840</ele>
+        </rtept>
+        <rtept lat="27.90" lon="86.85">
+            <name>C</name>
+            <ele>8835.6</ele>
+        </rtept>
+    </rte>
+</gpx>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<gpx version="1.1" creator="NTU" xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+    <trk>
+        <name>negativeElevation</name>
+        <trkseg>
+            <name>N-E</name>
+            <trkpt lat="53.05442180" lon="-3.38928222">
+                <ele>-20.00000</ele>
+                <time>2010-01-01T00:00:00Z</time>
+            </trkpt>
+            <trkpt lat="52.98833720" lon="-3.18054199">
+                <ele>-10.00000</ele>
+                <time>2010-01-01T01:34:39Z</time>
+            </trkpt>
+            <trkpt lat="52.96849210" lon="-2.93884277">
+                <ele>-15.000000</ele>
+                <time>2010-01-01T03:12:39Z</time>
+            </trkpt>
+        </trkseg>
+    </trk>
+</gpx>

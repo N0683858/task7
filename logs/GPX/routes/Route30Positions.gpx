@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<gpx version="1.1" creator="NTU" xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+    <rte>
+        <name>MNSRQLGHCDEJOTYXWVUPKFABCHMRWX</name>
+        <rtept lat="42.74" lon="-25">
+            <name>M</name>
+            <ele>30.000000</ele>
+        </rtept>
+        <rtept lat="42.74" lon="-12.7688">
+            <name>N</name>
+            <ele>20.000000</ele>
+        </rtept>
+        <rtept lat="33.7418" lon="-12.7688">
+            <name>S</name>
+            <ele>20.000000</ele>
+        </rtept>
+        <rtept lat="33.7418" lon="-25">
+            <name>R</name>
+            <ele>20.000000</ele>
+        </rtept>
+        <rtept lat="33.7418" lon="-37.2312">
+            <name>Q</name>
+            <ele>20.000000</ele>
+        </rtept>
+        <rtept lat="42.74" lon="-37.2312">
+            <name>L</name>
+            <ele>20.000000</ele>
+        </rtept>
+        <rtept lat="51.7382" lon="-37.2312">
+            <name>G</name>
+            <ele>20.000000</ele>
+        </rtept>
+        <rtept lat="51.7382" lon="-25">
+            <name>H</name>
+            <ele>20.000000</ele>
+        </rtept>
+        <rtept lat="60.7364" lon="-25">
+            <name>C</name>
+            <ele>10.000000</ele>
+        </rtept>
+        <rtept lat="60.7364" lon="-12.7688">
+            <name>D</name>
+            <ele>10.000000</ele>
+        </rtept>
+        <rtept lat="60.7364" lon="-0.537528">
+            <name>E</name>
+            <ele>10.000000</ele>
+        </rtept>
+        <rtept lat="51.7382" lon="-0.537528">
+            <name>J</name>
+            <ele>10.000000</ele>
+        </rtept>
+        <rtept lat="42.74" lon="-0.537528">
+            <name>O</name>
+            <ele>10.000000</ele>
+        </rtept>
+        <rtept lat="33.7418" lon="-0.537528">
+            <name>T</name>
+            <ele>10.000000</ele>
+        </rtept>
+        <rtept lat="24.7436" lon="-0.537528">
+            <name>Y</name>
+            <ele>10.000000</ele>
+        </rtept>
+        <rtept lat="24.7436" lon="-12.7688">
+            <name>X</name>
+            <ele>10.000000</ele>
+        </rtept>
+        <rtept lat="24.7436" lon="-25">
+            <name>W</name>
+            <ele>10.000000</ele>
+        </rtept>
+        <rtept lat="24.7436" lon="-37.2312">
+            <name>V</name>
+            <ele>10.000000</ele>
+        </rtept>
+        <rtept lat="24.7436" lon="-49.4625">
+            <name>U</name>
+            <ele>10.000000</ele>
+        </rtept>
+        <rtept lat="33.7418" lon="-49.4625">
+            <name>P</name>
+            <ele>10.000000</ele>
+        </rtept>
+        <rtept lat="42.74" lon="-49.4625">
+            <name>K</name>
+            <ele>10.000000</ele>
+        </rtept>
+        <rtept lat="51.7382" lon="-49.4625">
+            <name>F</name>
+            <ele>10.000000</ele>
+        </rtept>
+        <rtept lat="60.7364" lon="-49.4625">
+            <name>A</name>
+            <ele>10.000000</ele>
+        </rtept>
+        <rtept lat="60.7364" lon="-37.2312">
+            <name>B</name>
+            <ele>10.000000</ele>
+        </rtept>
+        <rtept lat="60.7364" lon="-25">
+            <name>C</name>
+            <ele>10.000000</ele>
+        </rtept>
+        <rtept lat="51.7382" lon="-25">
+            <name>H</name>
+            <ele>20.000000</ele>
+        </rtept>
+        <rtept lat="42.74" lon="-25">
+            <name>M</name>
+            <ele>30.000000</ele>
+        </rtept>
+        <rtept lat="33.7418" lon="-25">
+            <name>R</name>
+            <ele>20.000000</ele>
+        </rtept>
+        <rtept lat="24.7436" lon="-25">
+            <name>W</name>
+            <ele>10.000000</ele>
+        </rtept>
+        <rtept lat="24.7436" lon="-12.7688">
+            <name>X</name>
+            <ele>10.000000</ele>
+        </rtept>
+    </rte>
+</gpx>

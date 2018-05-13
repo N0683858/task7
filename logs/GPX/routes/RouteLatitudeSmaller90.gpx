@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<gpx version="1.1" creator="NTU" xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+    <rte>
+        <name>AFKPU</name>
+        <rtept lat="-62.1736" lon="-57.2347">
+            <name>A</name>
+            <ele>-9.000000</ele>
+        </rtept>
+        <rtept lat="-71.1718" lon="-57.2347">
+            <name>F</name>
+            <ele>-9.000000</ele>
+        </rtept>
+        <rtept lat="-80.17" lon="-57.2347">
+            <name>K</name>
+            <ele>-9.000000</ele>
+        </rtept>
+        <rtept lat="-90.0001" lon="-57.2347">
+            <name>P</name>
+            <ele>-9.000000</ele>
+        </rtept>
+        <rtept lat="-81.8336" lon="122.765">
+            <name>U</name>
+            <ele>-9.000000</ele>
+        </rtept>
+    </rte>
+</gpx>

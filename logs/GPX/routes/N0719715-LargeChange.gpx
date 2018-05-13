@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<gpx version="1.1" creator="NTU" xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+    <rte>
+        <name>WRSM</name>
+        <rtept lat="53.0053" lon="-2.19936">
+            <name>W</name>
+            <ele>-7000.000000</ele>
+        </rtept>
+        <rtept lat="53.0143" lon="-2.19936">
+            <name>R</name>
+            <ele>1000.000000</ele>
+        </rtept>
+        <rtept lat="53.0143" lon="-2.18443">
+            <name>S</name>
+            <ele>1000.000000</ele>
+        </rtept>
+        <rtept lat="53.0233" lon="-2.19936">
+            <name>M</name>
+            <ele>9000.000000</ele>
+        </rtept>
+    </rte>
+</gpx>

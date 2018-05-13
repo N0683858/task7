@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<gpx version="1.1" creator="NTU" xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+    <trk>
+        <name>TrackIntervalOdd</name>
+        <trkseg>
+            <name>M-A</name>
+            <trkpt lat="0" lon="109.322">
+                <ele>0.000000</ele>
+                <time>0</time>
+            </trkpt>
+            <trkpt lat="0.0359928" lon="109.286">
+                <ele>0.000000</ele>
+                <time>5</time>
+            </trkpt>
+            <trkpt lat="0.0719856" lon="109.25">
+                <ele>0.000000</ele>
+                <time>10</time>
+            </trkpt>
+            <trkpt lat="0.107978" lon="109.214">
+                <ele>0.000000</ele>
+                <time>15</time>
+            </trkpt>
+            <trkpt lat="0.143971" lon="109.178">
+                <ele>0.000000</ele>
+                <time>20</time>
+            </trkpt>
+            <trkpt lat="0.179964" lon="109.142">
+                <ele>0.000000</ele>
+                <time>25</time>
+            </trkpt>
+        </trkseg>
+        <trkseg>
+            <name>A-G</name>
+            <trkpt lat="0.179964" lon="109.142">
+                <ele>0.000000</ele>
+                <time>27</time>
+            </trkpt>
+            <trkpt lat="0.14997" lon="109.172">
+                <ele>0.000000</ele>
+                <time>32</time>
+            </trkpt>
+            <trkpt lat="0.119976" lon="109.202">
+                <ele>0.000000</ele>
+                <time>37</time>
+            </trkpt>
+            <trkpt lat="0.089982" lon="109.232">
+                <ele>0.000000</ele>
+                <time>42</time>
+            </trkpt>
+        </trkseg>
+    </trk>
+</gpx>

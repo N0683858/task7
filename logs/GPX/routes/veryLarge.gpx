@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<gpx version="1.1" creator="NTU" xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+    <rte>
+        <rtept lat="10.18" lon="-1.38243">
+            <name>A</name>
+            <ele>199999999999984224.000000</ele>
+        </rtept>
+        <rtept lat="10.09" lon="-1.2">
+            <name>H</name>
+            <ele>199999999999992096.000000</ele>
+        </rtept>
+        <rtept lat="10" lon="-1.2">
+            <name>M</name>
+            <ele>200000000000000000.000000</ele>
+        </rtept>
+        <rtept lat="10.18" lon="-1.29122">
+            <name>B</name>
+            <ele>199999999999984224.000000</ele>
+        </rtept>
+        <rtept lat="9.91002" lon="-1.10878">
+            <name>S</name>
+            <ele>199999999999992096.000000</ele>
+        </rtept>
+        <rtept lat="9.82004" lon="-1.01757">
+            <name>Y</name>
+            <ele>199999999999984224.000000</ele>
+        </rtept>
+        <rtept lat="10.09" lon="-1.2">
+            <name>H</name>
+            <ele>199999999999992096.000000</ele>
+        </rtept>
+    </rte>
+</gpx>

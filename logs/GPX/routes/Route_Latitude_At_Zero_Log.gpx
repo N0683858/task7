@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<gpx version="1.1"
+     creator="myTracks"
+     xmlns="http://www.topografix.com/GPX/1/1"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xmlns:mytracks="http://mytracks.stichling.info/myTracksGPX/1/0"
+     xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+<rte>
+<rtept lat="0" lon="12.38675485673857"><ele>309</ele></rtept>
+<rtept lat="0" lon="34.12765439876543"><ele>309</ele></rtept>
+<rtept lat="0" lon="56.50275920347428"><ele>309</ele></rtept>
+<rtept lat="0" lon="31.13456789876544"><ele>309</ele></rtept>
+<rtept lat="0" lon="78.65436790976546"><ele>309</ele></rtept>
+</rte>
+</gpx>

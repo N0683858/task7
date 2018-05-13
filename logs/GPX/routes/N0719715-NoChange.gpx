@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<gpx version="1.1" creator="NTU" xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+    <rte>
+        <name>QVUPLM</name>
+        <rtept lat="53.0143" lon="-2.21429">
+            <name>Q</name>
+            <ele>120.000000</ele>
+        </rtept>
+        <rtept lat="53.0053" lon="-2.21429">
+            <name>V</name>
+            <ele>120.000000</ele>
+        </rtept>
+        <rtept lat="53.0053" lon="-2.22923">
+            <name>U</name>
+            <ele>120.000000</ele>
+        </rtept>
+        <rtept lat="53.0143" lon="-2.22923">
+            <name>P</name>
+            <ele>120.000000</ele>
+        </rtept>
+        <rtept lat="53.0233" lon="-2.21429">
+            <name>L</name>
+            <ele>120.000000</ele>
+        </rtept>
+        <rtept lat="53.0233" lon="-2.19936">
+            <name>M</name>
+            <ele>120.000000</ele>
+        </rtept>
+    </rte>
+</gpx>

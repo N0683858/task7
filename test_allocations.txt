@@ -1,0 +1,29 @@
+Route::numPositions() - N0695913, N0719388, N0650950
+Route::totalLength() - N0673230, T0068955, N0683389
+Route::netLength() -
+Route::totalHeightGain() - N0720387, N0693955, N0673230
+Route::netHeightGain() - N0689061, N0683858, N0719058
+Route::minLatitude() - N0720717
+Route::netLength() - N0641701, T0073651
+Route::totalHeightGain() -N0700591
+Route::minLatitude() - N0682255, N0707417
+Route::maxLatitude() - N0690641, N0630057, N0643498
+Route::minLongitude() - N0676284, N0692013, N0671080
+Route::maxLongitude() - n0494166, N0669298, N0680337
+Route::minElevation() - N0699610, N0719715, N0680788
+Route::maxElevation() - N0689529, N0686300, N0703481
+Route::maxGradient() - N0688119, N0697611, N0686602
+Route::minGradient() - N0671966, N0720144 , n0719479
+Route::steepestGradient() -
+Route::operator[]() - T0073322
+Route::findPosition() - N0680192, N0682133, N0689085
+Route::findNameOf() -
+Route::timesVisited(string) -
+Route::timesVisited(Position) -
+Track::totalTime() - N0641991, N0702007, N0688008
+Track::restingTime() -
+Track::travellingTime() - N0696066
+Track::maxSpeed() - N0685556
+Track::averageSpeed() - N0695426
+Track::maxRateOfAscent() - N0687265
+Track::maxRateOfDescent() - N0693165
