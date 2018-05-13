@@ -359,16 +359,13 @@ Route::Route(string source, bool isFileName, metres granularity)
      * repeat for the "rte" element
      */
     if (! elementExists(source,"gpx")) throw domain_error("No 'gpx' element.");
-    //temp = getElement(source, "gpx");
     source = getElementContent(getElement(source, "gpx"));
     if (! elementExists(source,"rte")) throw domain_error("No 'rte' element.");
-    //temp = getElement(source, "rte");
     source = getElementContent(getElement(source, "rte"));
     /*
      *I kind of get this but not sure how to explain it in detail
      */
     if (elementExists(source, "name")) {
-        //temp = getAndEraseElement(source, "name");
         routeName = getElementContent(getAndEraseElement(source, "name"));
         oss << "Route name is: " << routeName << endl;
     }
@@ -381,7 +378,6 @@ Route::Route(string source, bool isFileName, metres granularity)
     lon = getElementAttribute(temp, "lon");
     temp = getElementContent(temp);
     if (elementExists(temp, "ele")) {
-        //temp2 = getElement(temp, "ele");
         ele = getElementContent(getElement(temp, "ele"));
         Position startPos = Position(lat,lon,ele);
         positions.push_back(startPos);
@@ -394,7 +390,6 @@ Route::Route(string source, bool isFileName, metres granularity)
         ++num;
     }
     if (elementExists(temp,"name")) {
-        //temp2 = getElement(temp,"name");
         name = getElementContent(getElement(temp,"name"));
     }
     positionNames.push_back(name);
@@ -407,14 +402,12 @@ Route::Route(string source, bool isFileName, metres granularity)
         lon = getElementAttribute(temp, "lon");
         temp = getElementContent(temp);
         if (elementExists(temp, "ele")) {
-            //temp2 = getElement(temp, "ele");
             ele = getElementContent(getElement(temp, "ele"));
             nextPos = Position(lat,lon,ele);
         } else nextPos = Position(lat,lon);
         if (areSameLocation(nextPos, prevPos)) oss << "Position ignored: " << nextPos.toString() << endl;
         else {
             if (elementExists(temp,"name")) {
-                //temp2 = getElement(temp,"name");
                 name = getElementContent(getElement(temp,"name"));
             } else name = ""; // Fixed bug by adding this.
             positions.push_back(nextPos);
