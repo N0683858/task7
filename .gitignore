@@ -1,3 +1,5 @@
-
-GPX-Tests.pro.user
-*.user
+*.user.*
+*.o
+build/*
+execs/*
+Makefile

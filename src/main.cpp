@@ -22,8 +22,6 @@ void testRoute(std::string fileName)
     const std::string filePath = LogFiles::GPXRoutesDir + fileName + ".gpx";
     const bool isFileName = true;
 
-
-    Route route = Route(filePath, isFileName);
     Route route = Route(filePath,isFileName);
 
 

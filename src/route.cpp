@@ -15,7 +15,7 @@ using namespace GPS;
 using namespace std;
 using namespace XML::Parser;
 
-Route::name() const
+string Route::name() const
 {
    return routeName.empty() ? "Unnamed Route" : routeName;
 }
@@ -24,7 +24,7 @@ unsigned int Route::numPositions() const
 {
     const bool implemented = true;
     assert(implemented);
-    
+
     return positions.size();
 }
 
@@ -163,7 +163,7 @@ metres Route::maxElevation() const // N0669298
     if (positions.size() == 0)
     {
         throw invalid_argument("No positions in provided route");
-    }    
+    }
     degrees maxElev = positions[0].elevation();
     for(auto pos : positions){
         if(pos.elevation() > maxElev)
@@ -182,7 +182,7 @@ degrees Route::maxGradient() const
 
     degrees largestGradient;
     degrees testGradient;
- 
+
     if (distanceBetween(positions[0],positions[1])>0) {
         largestGradient =radToDeg(atan2((positions[1].elevation() - positions[0].elevation()),distanceBetween(positions[1],positions[0])));
         testGradient = largestGradient;
@@ -227,7 +227,7 @@ degrees Route::maxGradient() const
         if(testGradient > largestGradient){
              largestGradient = testGradient;
         }
-        
+
      }
     return largestGradient;
 }
@@ -291,19 +291,19 @@ Position Route::operator[](unsigned int idx) const
     return positions.at(idx);
 }
 
-Position Route::findPosition(const  & soughtName) const
+Position Route::findPosition(const string & soughtName) const
 {
     const bool implemented = false;
     assert(implemented);
 }
 
- Route::findNameOf(const Position & soughtPos) const
+string Route::findNameOf(const Position & soughtPos) const
 {
     const bool implemented = false;
     assert(implemented);
 }
 
-unsigned int Route::timesVisited(const  & soughtName) const
+unsigned int Route::timesVisited(const string & soughtName) const
 {
     const bool implemented = false;
     assert(implemented);
@@ -315,7 +315,7 @@ unsigned int Route::timesVisited(const Position & soughtPos) const
     assert(implemented);
 }
 
- Route::buildReport() const
+string Route::buildReport() const
 {
     return report;
 }
@@ -328,7 +328,7 @@ unsigned int Route::timesVisited(const Position & soughtPos) const
  * 4. the code where you "getElement" and "getElementContent" can be coded in the same line. e.g. source = getElementContent(getElement(source, "gpx"))
 */
 
-Route::Route(source, bool isFileName, metres granularity)
+Route::Route(string source, bool isFileName, metres granularity)
 {
     string lat,lon,ele,name,temp,temp2;
     metres deltaH,deltaV;
