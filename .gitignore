@@ -3,3 +3,4 @@
 build/*
 execs/*
 Makefile
+*.user
