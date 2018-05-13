@@ -12,7 +12,8 @@
 #include "position.h"
 
 using namespace GPS;
-using namespace std;
+using std::endl;
+using std::domain_error;
 using namespace XML::Parser;
 
 string Route::name() const
@@ -330,7 +331,7 @@ string Route::buildReport() const
 
 Route::Route(string source, bool isFileName, metres granularity)
 {
-    string lat,lon,ele,name,temp,temp2;
+    string lat,lon,ele,name,temp;
     metres deltaH,deltaV;
     ostringstream oss,oss2;
     unsigned int num = 0;
@@ -342,11 +343,11 @@ Route::Route(string source, bool isFileName, metres granularity)
      * then converts it to a string and stores it in the "source" variable
      */
     if (isFileName){
-        ifstream fs(source);
+        std::ifstream fs(source);
         if (! fs.good()) throw invalid_argument("Error opening source file '" + source + "'.");
         oss << "Source file '" << source << "' opened okay." << endl;
         while (fs.good()) {
-            getline(fs, temp);
+            std::getline(fs, temp);
             oss2 << temp << endl;
         }
         source = oss2.str();
