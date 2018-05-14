@@ -434,6 +434,7 @@ Route::Route(string source, bool isFileName, metres granularity)
     }
     reportStream << positions.size() << " positions added." << endl;
 
+    //Calculate and set route length
     calculateRouteLength();
 
     //Set report to report stream we created
@@ -441,6 +442,7 @@ Route::Route(string source, bool isFileName, metres granularity)
 
     //Temp checking that report is correct
     std::cout<<report<<std::endl;
+
     ifstream load(name + "save.txt");
     string checker;
     std::stringstream ss;
