@@ -338,9 +338,7 @@ string Route::buildReport() const
 Route::Route(string source, bool isFileName, metres granularity)
 {
     string lat,lon,ele,name;
-    metres deltaH,deltaV;
     ostringstream reportStream;
-    unsigned int num = 0;
     this->granularity = granularity;
     /*
      * If the "source" variable is a filename, the function getGPXFromFile is called to get the apropriate GPX log from the file
@@ -353,10 +351,12 @@ Route::Route(string source, bool isFileName, metres granularity)
      */
     validateHeader(GPXData, reportStream);
 
+    //
     if (!elementExists(GPXData,"rtept"))
     {
         throw domain_error("No 'rtept' element.");
     }
+
     string temp = getAndEraseElement(GPXData, "rtept");
     if (! attributeExists(temp,"lat"))
     {
@@ -375,21 +375,20 @@ Route::Route(string source, bool isFileName, metres granularity)
         Position startPos = Position(lat,lon,ele);
         positions.push_back(startPos);
         reportStream << "Position added: " << startPos.toString() << endl;
-        ++num;
     }
     else
     {
         Position startPos = Position(lat,lon);
         positions.push_back(startPos);
         reportStream << "Position added: " << startPos.toString() << endl;
-        ++num;
     }
     if (elementExists(temp,"name"))
     {
         name = getElementContent(getElement(temp,"name"));
     }
     positionNames.push_back(name);
-    Position prevPos = positions.back(), nextPos = positions.back();
+    Position prevPos = positions.back();
+    Position nextPos = positions.back();
     while (elementExists(GPXData, "rtept"))
     {
         temp = getAndEraseElement(GPXData, "rtept");
@@ -425,23 +424,16 @@ Route::Route(string source, bool isFileName, metres granularity)
             }
             else
             {
-                name = ""; // Fixed bug by adding this.
                 positions.push_back(nextPos);
-                positionNames.push_back(name);
+                positionNames.push_back("");
                 reportStream << "Position added: " << nextPos.toString() << endl;
-                ++num;
                 prevPos = nextPos;
             }
         }
     }
-    reportStream << num << " positions added." << endl;
-    routeLength = 0;
-    for (unsigned int i = 1; i < num; ++i )
-    {
-        deltaH = distanceBetween(positions[i-1], positions[i]);
-        deltaV = positions[i-1].elevation() - positions[i].elevation();
-        routeLength += sqrt(pow(deltaH,2) + pow(deltaV,2));
-    }
+    reportStream << positions.size() << " positions added." << endl;
+
+    calculateRouteLength(positions.size());
 
     report = reportStream.str();
 
@@ -498,6 +490,17 @@ void Route::validateHeader(string& GPXData, ostringstream& report)
     {
         routeName = getElementContent(getAndEraseElement(GPXData, "name"));
         report << "Route name is: " << routeName << endl;
+    }
+}
+
+void Route::calculateRouteLength(unsigned int numOfPositions)
+{
+    routeLength = 0;
+    for (unsigned int i = 1; i < numOfPositions; ++i )
+    {
+        metres deltaH = distanceBetween(positions[i-1], positions[i]);
+        metres deltaV = positions[i-1].elevation() - positions[i].elevation();
+        routeLength += sqrt(pow(deltaH,2) + pow(deltaV,2));
     }
 }
 

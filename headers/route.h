@@ -115,6 +115,8 @@ namespace GPS
       */
       std::string getGPXFromFile(std::string fileName, std::ostringstream& report);
       void validateHeader(std::string& GPXData, std::ostringstream& report);
+
+      void calculateRouteLength(unsigned int numOfPositions);
   };
 }
 

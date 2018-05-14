@@ -1,7 +1,5 @@
 *.user.*
 *.o
-build/*
-execs/*
 Makefile
 *.user
 GPX.pro.user
