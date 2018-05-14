@@ -424,17 +424,19 @@ Route::Route(string source, bool isFileName, metres granularity)
             }
             else
             {
-                positions.push_back(nextPos);
-                positionNames.push_back("");
-                reportStream << "Position added: " << nextPos.toString() << endl;
-                prevPos = nextPos;
+                name = "";
             }
+            positions.push_back(nextPos);
+            positionNames.push_back(name);
+            reportStream << "Position added: " << nextPos.toString() << endl;
+            prevPos = nextPos;
         }
     }
     reportStream << positions.size() << " positions added." << endl;
 
-    calculateRouteLength(positions.size());
+    calculateRouteLength();
 
+    //Set report to report stream we created
     report = reportStream.str();
 
     //Temp checking that report is correct
@@ -493,10 +495,10 @@ void Route::validateHeader(string& GPXData, ostringstream& report)
     }
 }
 
-void Route::calculateRouteLength(unsigned int numOfPositions)
+void Route::calculateRouteLength()
 {
     routeLength = 0;
-    for (unsigned int i = 1; i < numOfPositions; ++i )
+    for (unsigned int i = 1; i < positions.size(); ++i )
     {
         metres deltaH = distanceBetween(positions[i-1], positions[i]);
         metres deltaV = positions[i-1].elevation() - positions[i].elevation();
