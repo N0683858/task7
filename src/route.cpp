@@ -337,7 +337,6 @@ string Route::buildReport() const
 
 Route::Route(string source, bool isFileName, metres granularity)
 {
-    string lat,lon,ele,name;
     ostringstream reportStream;
     this->granularity = granularity;
     /*
@@ -350,100 +349,19 @@ Route::Route(string source, bool isFileName, metres granularity)
      * If name element found in header then the route name is assigned from that
      */
     validateHeader(GPXData, reportStream);
-
-    //
-    if (!elementExists(GPXData,"rtept"))
-    {
-        throw domain_error("No 'rtept' element.");
-    }
-
-    string temp = getAndEraseElement(GPXData, "rtept");
-    if (! attributeExists(temp,"lat"))
-    {
-        throw domain_error("No 'lat' attribute.");
-    }
-    if (! attributeExists(temp,"lon"))
-    {
-        throw domain_error("No 'lon' attribute.");
-    }
-    lat = getElementAttribute(temp, "lat");
-    lon = getElementAttribute(temp, "lon");
-    temp = getElementContent(temp);
-    if (elementExists(temp, "ele"))
-    {
-        ele = getElementContent(getElement(temp, "ele"));
-        Position startPos = Position(lat,lon,ele);
-        positions.push_back(startPos);
-        reportStream << "Position added: " << startPos.toString() << endl;
-    }
-    else
-    {
-        Position startPos = Position(lat,lon);
-        positions.push_back(startPos);
-        reportStream << "Position added: " << startPos.toString() << endl;
-    }
-    if (elementExists(temp,"name"))
-    {
-        name = getElementContent(getElement(temp,"name"));
-    }
-    positionNames.push_back(name);
-    Position prevPos = positions.back();
-    Position nextPos = positions.back();
-    while (elementExists(GPXData, "rtept"))
-    {
-        temp = getAndEraseElement(GPXData, "rtept");
-        if (! attributeExists(temp,"lat"))
-        {
-            throw domain_error("No 'lat' attribute.");
-        }
-        if (! attributeExists(temp,"lon"))
-        {
-            throw domain_error("No 'lon' attribute.");
-        }
-        lat = getElementAttribute(temp, "lat");
-        lon = getElementAttribute(temp, "lon");
-        temp = getElementContent(temp);
-        if (elementExists(temp, "ele"))
-        {
-            ele = getElementContent(getElement(temp, "ele"));
-            nextPos = Position(lat,lon,ele);
-        }
-        else
-        {
-            nextPos = Position(lat,lon);
-        }
-        if (areSameLocation(nextPos, prevPos))
-        {
-            reportStream << "Position ignored: " << nextPos.toString() << endl;
-        }
-        else
-        {
-            if (elementExists(temp,"name"))
-            {
-                name = getElementContent(getElement(temp,"name"));
-            }
-            else
-            {
-                name = "";
-            }
-            positions.push_back(nextPos);
-            positionNames.push_back(name);
-            reportStream << "Position added: " << nextPos.toString() << endl;
-            prevPos = nextPos;
-        }
-    }
-    reportStream << positions.size() << " positions added." << endl;
-
+    /*
+     * Functions that add positions to position vector
+     */
+    addPositions(GPXData, reportStream);
     //Calculate and set route length
     calculateRouteLength();
-
     //Set report to report stream we created
     report = reportStream.str();
 
     //Temp checking that report is correct
     std::cout<<report<<std::endl;
 
-    ifstream load(name + "save.txt");
+    ifstream load(routeName + "save.txt");
     string checker;
     std::stringstream ss;
     ss << load.rdbuf();
@@ -495,6 +413,86 @@ void Route::validateHeader(string& GPXData, ostringstream& report)
         routeName = getElementContent(getAndEraseElement(GPXData, "name"));
         report << "Route name is: " << routeName << endl;
     }
+}
+
+void Route::addPositions(std::string& GPXData, std::ostringstream& report)
+{
+    string lat,lon,ele;
+    Position startPos(0,0), prevPos(0,0), nextPos(0,0);
+    bool first = 1;
+
+    if (!elementExists(GPXData,"rtept"))
+    {
+        throw domain_error("No 'rtept' element.");
+    }
+
+    while (elementExists(GPXData, "rtept"))
+    {
+        string data = getAndEraseElement(GPXData, "rtept");
+        if (!attributeExists(data,"lat"))
+        {
+            throw domain_error("No 'lat' attribute.");
+        }
+        if (!attributeExists(data,"lon"))
+        {
+            throw domain_error("No 'lon' attribute.");
+        }
+        lat = getElementAttribute(data, "lat");
+        lon = getElementAttribute(data, "lon");
+        data = getElementContent(data);
+        if (elementExists(data, "ele"))
+        {
+            ele = getElementContent(getElement(data, "ele"));
+            if (first)
+            {
+                startPos = Position(lat,lon,ele);
+            }
+            else
+            {
+                nextPos = Position(lat,lon,ele);
+            }
+        }
+        else
+        {
+            if (first)
+            {
+                startPos = Position(lat,lon);
+            }
+            else
+            {
+                nextPos = Position(lat,lon);
+            }
+        }
+        if (!first)
+        {
+            if (areSameLocation(nextPos, prevPos))
+            {
+                report << "Position ignored: " << nextPos.toString() << endl;
+                continue;
+            }
+            positions.push_back(nextPos);
+            report << "Position added: " << nextPos.toString() << endl;
+            prevPos = nextPos;
+        }
+        else
+        {
+            positions.push_back(startPos);
+            report << "Position added: " << startPos.toString() << endl;
+            prevPos = positions.back();
+            nextPos = positions.back();
+            first = 0;
+        }
+
+        if (elementExists(data,"name"))
+        {
+            positionNames.push_back(getElementContent(getElement(data,"name")));
+        }
+        else
+        {
+            positionNames.push_back("");
+        }
+    }
+    report << positions.size() << " positions added." << endl;
 }
 
 void Route::calculateRouteLength()
