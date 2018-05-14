@@ -12,6 +12,8 @@
 #include "position.h"
 
 using namespace GPS;
+using namespace XML::Parser;
+
 using std::endl;
 using std::domain_error;
 using std::out_of_range;
@@ -20,8 +22,6 @@ using std::string;
 using std::ostringstream;
 using std::ifstream;
 using std::vector;
-
-using namespace XML::Parser;
 
 string Route::name() const
 {
@@ -337,7 +337,7 @@ string Route::buildReport() const
 
 Route::Route(string source, bool isFileName, metres granularity)
 {
-    string lat,lon,ele,name,temp;
+    string lat,lon,ele,name;
     metres deltaH,deltaV;
     ostringstream reportStream;
     unsigned int num = 0;
@@ -348,87 +348,122 @@ Route::Route(string source, bool isFileName, metres granularity)
      */
     string GPXData = isFileName ? getGPXFromFile(source, reportStream) : source;
     /*
-     * Checks to see if the "gpx" element exists in the log file
-     * if it doesn't it will throw "domain_error" and an error message
-     * if it does, then it will use the "getElement" function to get everything between the "gpx" element tags and store it in temp variable
-     * then use the "getElementContent" to get all the content of the log file
-     * repeat for the "rte" element
+     * Function called that validates that the top of the GPX data contains gpx and rte, throws if not
+     * If name element found in header then the route name is assigned from that
      */
-    if (!elementExists(GPXData,"gpx"))
-    {
-        throw domain_error("No 'gpx' element.");
-    }
-    GPXData = getElementContent(getElement(GPXData, "gpx"));
-    if (!elementExists(GPXData,"rte"))
-    {
-        throw domain_error("No 'rte' element.");
-    }
-    GPXData = getElementContent(getElement(GPXData, "rte"));
+    validateHeader(GPXData, reportStream);
 
-    if (elementExists(GPXData, "name"))
+    if (!elementExists(GPXData,"rtept"))
     {
-        routeName = getElementContent(getAndEraseElement(GPXData, "name"));
-        reportStream << "Route name is: " << routeName << endl;
+        throw domain_error("No 'rtept' element.");
     }
-
-    if (! elementExists(GPXData,"rtept")) throw domain_error("No 'rtept' element.");
-    temp = getAndEraseElement(GPXData, "rtept");
-    if (! attributeExists(temp,"lat")) throw domain_error("No 'lat' attribute.");
-    if (! attributeExists(temp,"lon")) throw domain_error("No 'lon' attribute.");
+    string temp = getAndEraseElement(GPXData, "rtept");
+    if (! attributeExists(temp,"lat"))
+    {
+        throw domain_error("No 'lat' attribute.");
+    }
+    if (! attributeExists(temp,"lon"))
+    {
+        throw domain_error("No 'lon' attribute.");
+    }
     lat = getElementAttribute(temp, "lat");
     lon = getElementAttribute(temp, "lon");
     temp = getElementContent(temp);
-    if (elementExists(temp, "ele")) {
+    if (elementExists(temp, "ele"))
+    {
         ele = getElementContent(getElement(temp, "ele"));
         Position startPos = Position(lat,lon,ele);
         positions.push_back(startPos);
         reportStream << "Position added: " << startPos.toString() << endl;
         ++num;
-    } else {
+    }
+    else
+    {
         Position startPos = Position(lat,lon);
         positions.push_back(startPos);
         reportStream << "Position added: " << startPos.toString() << endl;
         ++num;
     }
-    if (elementExists(temp,"name")) {
+    if (elementExists(temp,"name"))
+    {
         name = getElementContent(getElement(temp,"name"));
     }
     positionNames.push_back(name);
     Position prevPos = positions.back(), nextPos = positions.back();
-    while (elementExists(GPXData, "rtept")) {
+    while (elementExists(GPXData, "rtept"))
+    {
         temp = getAndEraseElement(GPXData, "rtept");
-        if (! attributeExists(temp,"lat")) throw domain_error("No 'lat' attribute.");
-        if (! attributeExists(temp,"lon")) throw domain_error("No 'lon' attribute.");
+        if (! attributeExists(temp,"lat"))
+        {
+            throw domain_error("No 'lat' attribute.");
+        }
+        if (! attributeExists(temp,"lon"))
+        {
+            throw domain_error("No 'lon' attribute.");
+        }
         lat = getElementAttribute(temp, "lat");
         lon = getElementAttribute(temp, "lon");
         temp = getElementContent(temp);
-        if (elementExists(temp, "ele")) {
+        if (elementExists(temp, "ele"))
+        {
             ele = getElementContent(getElement(temp, "ele"));
             nextPos = Position(lat,lon,ele);
-        } else nextPos = Position(lat,lon);
-        if (areSameLocation(nextPos, prevPos)) reportStream << "Position ignored: " << nextPos.toString() << endl;
-        else {
-            if (elementExists(temp,"name")) {
+        }
+        else
+        {
+            nextPos = Position(lat,lon);
+        }
+        if (areSameLocation(nextPos, prevPos))
+        {
+            reportStream << "Position ignored: " << nextPos.toString() << endl;
+        }
+        else
+        {
+            if (elementExists(temp,"name"))
+            {
                 name = getElementContent(getElement(temp,"name"));
-            } else name = ""; // Fixed bug by adding this.
-            positions.push_back(nextPos);
-            positionNames.push_back(name);
-            reportStream << "Position added: " << nextPos.toString() << endl;
-            ++num;
-            prevPos = nextPos;
+            }
+            else
+            {
+                name = ""; // Fixed bug by adding this.
+                positions.push_back(nextPos);
+                positionNames.push_back(name);
+                reportStream << "Position added: " << nextPos.toString() << endl;
+                ++num;
+                prevPos = nextPos;
+            }
         }
     }
     reportStream << num << " positions added." << endl;
     routeLength = 0;
-    for (unsigned int i = 1; i < num; ++i ) {
+    for (unsigned int i = 1; i < num; ++i )
+    {
         deltaH = distanceBetween(positions[i-1], positions[i]);
         deltaV = positions[i-1].elevation() - positions[i].elevation();
         routeLength += sqrt(pow(deltaH,2) + pow(deltaV,2));
     }
+
     report = reportStream.str();
+
+    //Temp checking that report is correct
+    std::cout<<report<<std::endl;
+    ifstream load(name + "save.txt");
+    string checker;
+    std::stringstream ss;
+    ss << load.rdbuf();
+    checker = ss.str();
+    load.close();
+    if (checker != report)
+    {
+        throw domain_error("Report wrong");
+    }
+    else
+    {
+        std::cout<<"Report success"<<std::endl;
+    }
 }
 
-string Route::getGPXFromFile(string fileName, ostringstream& report)
+string Route::getGPXFromFile(string fileName, std::ostringstream& report)
 {
     ostringstream parserStream;
     ifstream fileIn(fileName);
@@ -445,6 +480,25 @@ string Route::getGPXFromFile(string fileName, ostringstream& report)
     }
     fileIn.close();
     return parserStream.str();
+}
+
+void Route::validateHeader(string& GPXData, ostringstream& report)
+{
+    if (!elementExists(GPXData,"gpx"))
+    {
+        throw domain_error("No 'gpx' element.");
+    }
+    GPXData = getElementContent(getElement(GPXData, "gpx"));
+    if (!elementExists(GPXData,"rte"))
+    {
+        throw domain_error("No 'rte' element.");
+    }
+    GPXData = getElementContent(getElement(GPXData, "rte"));
+    if (elementExists(GPXData, "name"))
+    {
+        routeName = getElementContent(getAndEraseElement(GPXData, "name"));
+        report << "Route name is: " << routeName << endl;
+    }
 }
 
 void Route::setGranularity(metres granularity)

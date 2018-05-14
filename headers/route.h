@@ -114,6 +114,7 @@ namespace GPS
       in that file, and adds to a report stream
       */
       std::string getGPXFromFile(std::string fileName, std::ostringstream& report);
+      void validateHeader(std::string& GPXData, std::ostringstream& report);
   };
 }
 
