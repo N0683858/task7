@@ -418,14 +418,12 @@ void Route::validateHeader(string& GPXData, ostringstream& report)
 void Route::addPositions(std::string& GPXData, std::ostringstream& report)
 {
     string lat,lon,ele;
-    Position startPos(0,0), prevPos(0,0), nextPos(0,0);
+    Position prevPos(0,0), nextPos(0,0);
     bool first = 1;
-
     if (!elementExists(GPXData,"rtept"))
     {
         throw domain_error("No 'rtept' element.");
     }
-
     while (elementExists(GPXData, "rtept"))
     {
         string data = getAndEraseElement(GPXData, "rtept");
@@ -443,46 +441,29 @@ void Route::addPositions(std::string& GPXData, std::ostringstream& report)
         if (elementExists(data, "ele"))
         {
             ele = getElementContent(getElement(data, "ele"));
-            if (first)
-            {
-                startPos = Position(lat,lon,ele);
-            }
-            else
-            {
-                nextPos = Position(lat,lon,ele);
-            }
+            nextPos = Position(lat,lon,ele);
         }
         else
         {
-            if (first)
-            {
-                startPos = Position(lat,lon);
-            }
-            else
-            {
-                nextPos = Position(lat,lon);
-            }
+            nextPos = Position(lat,lon);
         }
-        if (!first)
+        if (!first && areSameLocation(nextPos, prevPos))
         {
-            if (areSameLocation(nextPos, prevPos))
-            {
-                report << "Position ignored: " << nextPos.toString() << endl;
-                continue;
-            }
-            positions.push_back(nextPos);
-            report << "Position added: " << nextPos.toString() << endl;
-            prevPos = nextPos;
+            report << "Position ignored: " << nextPos.toString() << endl;
+            continue;
         }
-        else
+        positions.push_back(nextPos);
+        report << "Position added: " << nextPos.toString() << endl;
+        if (first)
         {
-            positions.push_back(startPos);
-            report << "Position added: " << startPos.toString() << endl;
             prevPos = positions.back();
             nextPos = positions.back();
             first = 0;
         }
-
+        else
+        {
+            prevPos = nextPos;
+        }
         if (elementExists(data,"name"))
         {
             positionNames.push_back(getElementContent(getElement(data,"name")));
