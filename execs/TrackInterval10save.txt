@@ -1,0 +1,17 @@
+Source file '../logs/GPX/tracks/TrackInterval10.gpx' opened okay.
+Track name is: TrackInterval10
+Start position added: lat="0.179964" lon="109.142" ele="0"
+Position added: lat="0" lon="109.142" ele="0"
+ at time: 10
+Position added: lat="-0.179964" lon="109.142" ele="0"
+ at time: 20
+Position ignored: lat="-0.179964" lon="109.142" ele="0"
+Position added: lat="-0.157469" lon="109.187" ele="0"
+ at time: 30
+Position added: lat="-0.134973" lon="109.232" ele="0"
+ at time: 40
+Position added: lat="-0.112478" lon="109.277" ele="0"
+ at time: 50
+Position added: lat="-0.089982" lon="109.322" ele="0"
+ at time: 60
+7 positions added.

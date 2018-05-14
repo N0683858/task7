@@ -10,6 +10,8 @@
 #include "track.h"
 
 using namespace GPS;
+using namespace XML::Parser;
+using namespace std;
 
 // Note: The implementation should exploit the relationship:
 //   totalTime() == restingTime() + travellingTime()
@@ -72,101 +74,143 @@ speed Track::maxRateOfDescent() const
 
 Track::Track(std::string source, bool isFileName, metres granularity)
 {
-    using namespace std;
-    using namespace XML::Parser;
     string mergedTrkSegs,trkseg,lat,lon,ele,name,time,temp,temp2;
     metres deltaH,deltaV;
     seconds startTime, currentTime, timeElapsed;
-    ostringstream reportStream,oss2;
+    ostringstream reportStream;
     unsigned int num;
     this->granularity = granularity;
-    if (isFileName) {
-        ifstream fs(source);
-        if (! fs.good()) throw invalid_argument("Error opening source file '" + source + "'.");
-        reportStream << "Source file '" << source << "' opened okay." << endl;
-        while (fs.good()) {
-            getline(fs, temp);
-            oss2 << temp << endl;
-        }
-        source = oss2.str();
+
+    string GPXData = isFileName ? getGPXFromFile(source, reportStream) : source;
+
+    if (! elementExists(GPXData,"gpx"))
+    {
+        throw domain_error("No 'gpx' element.");
     }
-    if (! elementExists(source,"gpx")) throw domain_error("No 'gpx' element.");
-    temp = getElement(source, "gpx");
-    source = getElementContent(temp);
-    if (! elementExists(source,"trk")) throw domain_error("No 'trk' element.");
-    temp = getElement(source, "trk");
-    source = getElementContent(temp);
-    if (elementExists(source, "name")) {
-        temp = getAndEraseElement(source, "name");
+    temp = getElement(GPXData, "gpx");
+    GPXData = getElementContent(temp);
+    if (! elementExists(GPXData,"trk"))
+    {
+        throw domain_error("No 'trk' element.");
+    }
+    temp = getElement(GPXData, "trk");
+    GPXData = getElementContent(temp);
+    if (elementExists(GPXData, "name"))
+    {
+        temp = getAndEraseElement(GPXData, "name");
         routeName = getElementContent(temp);
         reportStream << "Track name is: " << routeName << endl;
     }
-    while (elementExists(source, "trkseg")) {
-        temp = getAndEraseElement(source, "trkseg");
+    while (elementExists(GPXData, "trkseg"))
+    {
+        temp = getAndEraseElement(GPXData, "trkseg");
         trkseg = getElementContent(temp);
         getAndEraseElement(trkseg, "name");
         mergedTrkSegs += trkseg;
     }
-    if (! mergedTrkSegs.empty()) source = mergedTrkSegs;
+    if (! mergedTrkSegs.empty())
+    {
+        GPXData = mergedTrkSegs;
+    }
     num = 0;
-    if (! elementExists(source,"trkpt")) throw domain_error("No 'trkpt' element.");
-    temp = getAndEraseElement(source, "trkpt");
-    if (! attributeExists(temp,"lat")) throw domain_error("No 'lat' attribute.");
-    if (! attributeExists(temp,"lon")) throw domain_error("No 'lon' attribute.");
+    if (! elementExists(GPXData,"trkpt"))
+    {
+        throw domain_error("No 'trkpt' element.");
+    }
+    temp = getAndEraseElement(GPXData, "trkpt");
+    if (! attributeExists(temp,"lat"))
+    {
+        throw domain_error("No 'lat' attribute.");
+    }
+
+    if (! attributeExists(temp,"lon"))
+    {
+        throw domain_error("No 'lon' attribute.");
+    }
     lat = getElementAttribute(temp, "lat");
     lon = getElementAttribute(temp, "lon");
     temp = getElementContent(temp);
 
-    if (elementExists(temp, "ele")) {
+    if (elementExists(temp, "ele"))
+    {
         temp2 = getElement(temp, "ele");
         ele = getElementContent(temp2);
         Position startPos = Position(lat,lon,ele);
         positions.push_back(startPos);
         reportStream << "Start position added: " << startPos.toString() << endl;
         ++num;
-    } else {
+    }
+    else
+    {
         Position startPos = Position(lat,lon);
         positions.push_back(startPos);
         reportStream << "Start position added: " << startPos.toString() << endl;
         ++num;
     }
-    if (elementExists(temp,"name")) {
+    if (elementExists(temp,"name"))
+    {
         temp2 = getElement(temp,"name");
         name = getElementContent(temp2);
     }
     positionNames.push_back(name);
     arrived.push_back(0);
     departed.push_back(0);
-    if (! elementExists(temp,"time")) throw domain_error("No 'time' element.");
+    if (! elementExists(temp,"time"))
+    {
+        throw domain_error("No 'time' element.");
+    }
     temp2 = getElement(temp,"time");
     time = getElementContent(temp2);
     startTime = currentTime = stringToTime(time);
     Position prevPos = positions.back(), nextPos = positions.back();
-    while (elementExists(source, "trkpt")) {
-        temp = getAndEraseElement(source, "trkpt");
-        if (! attributeExists(temp,"lat")) throw domain_error("No 'lat' attribute.");
-        if (! attributeExists(temp,"lon")) throw domain_error("No 'lon' attribute.");
+    while (elementExists(GPXData, "trkpt"))
+    {
+        temp = getAndEraseElement(GPXData, "trkpt");
+        if (! attributeExists(temp,"lat"))
+        {
+            throw domain_error("No 'lat' attribute.");
+        }
+        if (! attributeExists(temp,"lon"))
+        {
+            throw domain_error("No 'lon' attribute.");
+        }
         lat = getElementAttribute(temp, "lat");
         lon = getElementAttribute(temp, "lon");
         temp = getElementContent(temp);
-        if (elementExists(temp, "ele")) {
+        if (elementExists(temp, "ele"))
+        {
             temp2 = getElement(temp, "ele");
             ele = getElementContent(temp2);
             nextPos = Position(lat,lon,ele);
-        } else nextPos = Position(lat,lon);
-        if (! elementExists(temp,"time")) throw domain_error("No 'time' element.");
+        }
+        else
+        {
+            nextPos = Position(lat,lon);
+        }
+        if (! elementExists(temp,"time"))
+        {
+            throw domain_error("No 'time' element.");
+        }
         temp2 = getElement(temp,"time");
         time = getElementContent(temp2);
         currentTime = stringToTime(time);
-        if (areSameLocation(nextPos, prevPos)) {
+        if (areSameLocation(nextPos, prevPos))
+        {
             // If we're still at the same location, then we haven't departed yet.
             departed.back() = currentTime - startTime;
             reportStream << "Position ignored: " << nextPos.toString() << endl;
-        } else {
-            if (elementExists(temp,"name")) {
+        }
+        else
+        {
+            if (elementExists(temp,"name"))
+            {
                 temp2 = getElement(temp,"name");
                 name = getElementContent(temp2);
-            } else name = ""; // Fixed bug by adding this.
+            }
+            else
+            {
+                name = ""; // Fixed bug by adding this.
+            }
             positions.push_back(nextPos);
             positionNames.push_back(name);
             timeElapsed = currentTime - startTime;
@@ -180,12 +224,29 @@ Track::Track(std::string source, bool isFileName, metres granularity)
     }
     reportStream << num << " positions added." << endl;
     routeLength = 0;
-    for (unsigned int i = 1; i < num; ++i ) {
+    for (unsigned int i = 1; i < num; ++i )
+    {
         deltaH = distanceBetween(positions[i-1], positions[i]);
         deltaV = positions[i-1].elevation() - positions[i].elevation();
         routeLength += sqrt(pow(deltaH,2) + pow(deltaV,2));
     }
     report = reportStream.str();
+
+
+    //Test temp
+    ifstream load(routeName + "save.txt");
+    stringstream ss;
+    ss << load.rdbuf();
+    load.close();
+    if (report != ss.str())
+    {
+        throw domain_error("Report wrong");
+    }
+    else
+    {
+        cout <<"Report success"<<endl;
+    }
+
 }
 
 void Track::setGranularity(metres granularity)

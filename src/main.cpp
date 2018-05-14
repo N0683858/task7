@@ -46,4 +46,6 @@ int main()
 {
 	    testRoute("NorthYorkMoors");
 	    testRoute("ABCD");
+
+        Track track(LogFiles::GPXTracksDir + "TrackInterval10.gpx",1);
 }

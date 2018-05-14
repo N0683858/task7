@@ -13,15 +13,7 @@
 
 using namespace GPS;
 using namespace XML::Parser;
-
-using std::endl;
-using std::domain_error;
-using std::out_of_range;
-using std::invalid_argument;
-using std::string;
-using std::ostringstream;
-using std::ifstream;
-using std::vector;
+using namespace std;
 
 string Route::name() const
 {
@@ -328,13 +320,6 @@ string Route::buildReport() const
     return report;
 }
 
-/*
- * Few things you can change
- * 2. change variable names and add comments to make the code easy to understand
- * 3. add spaces between lines and spread the code out a little where neccessary
- * 4. the code where you "getElement" and "getElementContent" can be coded in the same line. e.g. source = getElementContent(getElement(source, "gpx"))
-*/
-
 Route::Route(string source, bool isFileName, metres granularity)
 {
     ostringstream reportStream;
@@ -357,28 +342,12 @@ Route::Route(string source, bool isFileName, metres granularity)
     calculateRouteLength();
     //Set report to report stream we created
     report = reportStream.str();
-
-    //Temp checking that report is correct
-    std::cout<<report<<std::endl;
-
-    ifstream load(routeName + "save.txt");
-    string checker;
-    std::stringstream ss;
-    ss << load.rdbuf();
-    checker = ss.str();
-    load.close();
-    if (checker != report)
-    {
-        throw domain_error("Report wrong");
-    }
-    else
-    {
-        std::cout<<"Report success"<<std::endl;
-    }
 }
 
 string Route::getGPXFromFile(string fileName, std::ostringstream& report)
 {
+    //Takes filename and reads in GPX data from that file
+    //Also adds to report stringstream
     ostringstream parserStream;
     ifstream fileIn(fileName);
     string parser;
@@ -398,6 +367,9 @@ string Route::getGPXFromFile(string fileName, std::ostringstream& report)
 
 void Route::validateHeader(string& GPXData, ostringstream& report)
 {
+    //Checks that header of gpx file is okay
+    //Sets in name if there is one in data
+    //Adds to report stringstream
     if (!elementExists(GPXData,"gpx"))
     {
         throw domain_error("No 'gpx' element.");
@@ -417,6 +389,7 @@ void Route::validateHeader(string& GPXData, ostringstream& report)
 
 void Route::addPositions(std::string& GPXData, std::ostringstream& report)
 {
+    //Loops through data and adds positions to route
     string lat,lon,ele;
     Position prevPos(0,0), nextPos(0,0);
     bool first = 1;
@@ -478,6 +451,7 @@ void Route::addPositions(std::string& GPXData, std::ostringstream& report)
 
 void Route::calculateRouteLength()
 {
+    //Function that calculates the length of the route
     routeLength = 0;
     for (unsigned int i = 1; i < positions.size(); ++i )
     {
