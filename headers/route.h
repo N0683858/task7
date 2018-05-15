@@ -113,10 +113,13 @@ namespace GPS
       Function that takes a filename and returns a string that is the GPX data
       in that file, and adds to a report stream
       */
-      std::string getGPXFromFile(std::string fileName, std::ostringstream& report);
-      void validateHeader(std::string& GPXData, std::ostringstream& report);
-      void addPositions(std::string& GPXData, std::ostringstream& report);
+      std::string getDataFromFile(std::string fileName, std::ostringstream& report);
+      void validateHeader(std::string& inData, std::ostringstream& report);
+      virtual void addGPXPositions(std::string& inData, std::ostringstream& report);
       void calculateRouteLength();
+      virtual void checkValidType(std::string& inData);
+      virtual void setName(std::string& inData, std::ostringstream& report);
+      void readInPositions(std::string& inData, std::ostringstream& report, unsigned int dataFormat);
   };
 }
 

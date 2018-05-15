@@ -325,28 +325,21 @@ Route::Route(string source, bool isFileName, metres granularity)
     ostringstream reportStream;
     this->granularity = granularity;
     /*
-     * If the "source" variable is a filename, the function getGPXFromFile is called to get the apropriate GPX log from the file
-     * If not then "source" variable is used as the GPX log.
+     * If the "source" variable is a filename, the function getDataFromFile is called to get the apropriate log from the file
+     * If not then "source" variable is used as the log.
      */
-    string GPXData = isFileName ? getGPXFromFile(source, reportStream) : source;
-    /*
-     * Function called that validates that the top of the GPX data contains gpx and rte, throws if not
-     * If name element found in header then the route name is assigned from that
-     */
-    validateHeader(GPXData, reportStream);
-    /*
-     * Functions that add positions to position vector
-     */
-    addPositions(GPXData, reportStream);
+    string inData = isFileName ? getDataFromFile(source, reportStream) : source;
+    //Add this data to route's positions vector in approppriate way, 0 being GPX
+    readInPositions(inData,reportStream,0);
     //Calculate and set route length
     calculateRouteLength();
     //Set report to report stream we created
     report = reportStream.str();
 }
 
-string Route::getGPXFromFile(string fileName, std::ostringstream& report)
+string Route::getDataFromFile(string fileName, std::ostringstream& report)
 {
-    //Takes filename and reads in GPX data from that file
+    //Takes filename and reads in data from that file
     //Also adds to report stringstream
     ostringstream parserStream;
     ifstream fileIn(fileName);
@@ -365,41 +358,38 @@ string Route::getGPXFromFile(string fileName, std::ostringstream& report)
     return parserStream.str();
 }
 
-void Route::validateHeader(string& GPXData, ostringstream& report)
+void Route::validateHeader(string& inData, ostringstream& report)
 {
     //Checks that header of gpx file is okay
-    //Sets in name if there is one in data
-    //Adds to report stringstream
-    if (!elementExists(GPXData,"gpx"))
+    //Checks if rte (can be overriden)
+    //Sets name and logs route (can be overriden)
+    if (!elementExists(inData,"gpx"))
     {
         throw domain_error("No 'gpx' element.");
     }
-    GPXData = getElementContent(getElement(GPXData, "gpx"));
-    if (!elementExists(GPXData,"rte"))
-    {
-        throw domain_error("No 'rte' element.");
-    }
-    GPXData = getElementContent(getElement(GPXData, "rte"));
-    if (elementExists(GPXData, "name"))
-    {
-        routeName = getElementContent(getAndEraseElement(GPXData, "name"));
-        report << "Route name is: " << routeName << endl;
-    }
+    inData = getElementContent(getElement(inData, "gpx"));
+    checkValidType(inData);
+    setName(inData,report);
 }
 
-void Route::addPositions(std::string& GPXData, std::ostringstream& report)
+void Route::addGPXPositions(string& inData, ostringstream& report)
 {
+    /*
+     * Function called that validates that the top of the GPX data contains gpx and rte, throws if not
+     * If name element found in header then the route name is assigned from that
+     */
+    validateHeader(inData, report);
     //Loops through data and adds positions to route
     string lat,lon,ele;
     Position prevPos(0,0), nextPos(0,0);
     bool first = 1;
-    if (!elementExists(GPXData,"rtept"))
+    if (!elementExists(inData,"rtept"))
     {
         throw domain_error("No 'rtept' element.");
     }
-    while (elementExists(GPXData, "rtept"))
+    while (elementExists(inData, "rtept"))
     {
-        string data = getAndEraseElement(GPXData, "rtept");
+        string data = getAndEraseElement(inData, "rtept");
         if (!attributeExists(data,"lat"))
         {
             throw domain_error("No 'lat' attribute.");
@@ -458,6 +448,43 @@ void Route::calculateRouteLength()
         metres deltaH = distanceBetween(positions[i-1], positions[i]);
         metres deltaV = positions[i-1].elevation() - positions[i].elevation();
         routeLength += sqrt(pow(deltaH,2) + pow(deltaV,2));
+    }
+}
+
+void Route::checkValidType(string& inData)
+{
+    //Checks top of data contains 'rte', can be overriden to 'trk'
+    if (!elementExists(inData,"rte"))
+    {
+        throw domain_error("No 'rte' element.");
+    }
+    inData = getElementContent(getElement(inData, "rte"));
+}
+
+void Route::setName(string& inData, ostringstream& report)
+{
+    //Sets name, logs setting of route name, can be overriden to track name
+    if (elementExists(inData, "name"))
+    {
+        routeName = getElementContent(getAndEraseElement(inData, "name"));
+        report << "Route name is: " << routeName << endl;
+    }
+}
+
+void Route::readInPositions(string& inData, ostringstream& report, unsigned int dataFormat)
+{
+    /*
+     * Function that adds positions to position vector for GPX data if GPX
+     * If another form of data, use different function
+     * This provides room for expansion
+     */
+    switch (dataFormat)
+    {
+    case 0:
+        addGPXPositions(inData, report);
+        break;
+    default:
+        throw runtime_error("Invalid data type chosen");
     }
 }
 

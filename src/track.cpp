@@ -74,50 +74,84 @@ speed Track::maxRateOfDescent() const
 
 Track::Track(std::string source, bool isFileName, metres granularity)
 {
-    string mergedTrkSegs,trkseg,lat,lon,ele,name,time,temp,temp2;
-    metres deltaH,deltaV;
-    seconds startTime, currentTime, timeElapsed;
     ostringstream reportStream;
-    unsigned int num;
     this->granularity = granularity;
+    /*
+     * If the "source" variable is a filename, the function getGPXFromFile is called to get the apropriate GPX log from the file
+     * If not then "source" variable is used as the GPX log.
+     */
+    string inData = isFileName ? getDataFromFile(source, reportStream) : source;
+    //Add this data to track's positions vector in approppriate way, 0 being GPX
+    readInPositions(inData,reportStream,0);
+    //Calculate and set route length
+    calculateRouteLength();
+    //Set report to report stream we created
+    report = reportStream.str();
 
-    string GPXData = isFileName ? getGPXFromFile(source, reportStream) : source;
-
-    if (! elementExists(GPXData,"gpx"))
+    //Test temp
+    ifstream load(routeName + "save.txt");
+    stringstream ss;
+    ss << load.rdbuf();
+    load.close();
+    if (report != ss.str())
     {
-        throw domain_error("No 'gpx' element.");
+        throw domain_error("Report wrong\n" + report);
     }
-    temp = getElement(GPXData, "gpx");
-    GPXData = getElementContent(temp);
-    if (! elementExists(GPXData,"trk"))
+    else
+    {
+        cout <<"Report success"<<endl;
+    }
+}
+
+void Track::checkValidType(string& inData)
+{
+    if (!elementExists(inData,"trk"))
     {
         throw domain_error("No 'trk' element.");
     }
-    temp = getElement(GPXData, "trk");
-    GPXData = getElementContent(temp);
-    if (elementExists(GPXData, "name"))
+    inData = getElementContent(getElement(inData, "trk"));
+}
+
+void Track::setName(std::string& inData, std::ostringstream& report)
+{
+    if (elementExists(inData, "name"))
     {
-        temp = getAndEraseElement(GPXData, "name");
-        routeName = getElementContent(temp);
-        reportStream << "Track name is: " << routeName << endl;
+        routeName = getElementContent(getAndEraseElement(inData, "name"));
+        report << "Track name is: " << routeName << endl;
     }
-    while (elementExists(GPXData, "trkseg"))
+}
+
+void Track::addGPXPositions(std::string& inData, std::ostringstream& report)
+{
+    /*
+     * Function called that validates that the top of the GPX data contains gpx and rte, throws if not
+     * If name element found in header then the route name is assigned from that
+     */
+    validateHeader(inData, report);
+    //Loops through data and adds positions to route
+
+
+
+    //START
+    string mergedTrkSegs,trkseg,lat,lon,ele,name,time,temp,temp2;
+
+    seconds startTime, currentTime, timeElapsed;
+    while (elementExists(inData, "trkseg"))
     {
-        temp = getAndEraseElement(GPXData, "trkseg");
+        temp = getAndEraseElement(inData, "trkseg");
         trkseg = getElementContent(temp);
         getAndEraseElement(trkseg, "name");
         mergedTrkSegs += trkseg;
     }
     if (! mergedTrkSegs.empty())
     {
-        GPXData = mergedTrkSegs;
+        inData = mergedTrkSegs;
     }
-    num = 0;
-    if (! elementExists(GPXData,"trkpt"))
+    if (! elementExists(inData,"trkpt"))
     {
         throw domain_error("No 'trkpt' element.");
     }
-    temp = getAndEraseElement(GPXData, "trkpt");
+    temp = getAndEraseElement(inData, "trkpt");
     if (! attributeExists(temp,"lat"))
     {
         throw domain_error("No 'lat' attribute.");
@@ -137,15 +171,13 @@ Track::Track(std::string source, bool isFileName, metres granularity)
         ele = getElementContent(temp2);
         Position startPos = Position(lat,lon,ele);
         positions.push_back(startPos);
-        reportStream << "Start position added: " << startPos.toString() << endl;
-        ++num;
+        report << "Start position added: " << startPos.toString() << endl;
     }
     else
     {
         Position startPos = Position(lat,lon);
         positions.push_back(startPos);
-        reportStream << "Start position added: " << startPos.toString() << endl;
-        ++num;
+        report << "Start position added: " << startPos.toString() << endl;
     }
     if (elementExists(temp,"name"))
     {
@@ -163,9 +195,9 @@ Track::Track(std::string source, bool isFileName, metres granularity)
     time = getElementContent(temp2);
     startTime = currentTime = stringToTime(time);
     Position prevPos = positions.back(), nextPos = positions.back();
-    while (elementExists(GPXData, "trkpt"))
+    while (elementExists(inData, "trkpt"))
     {
-        temp = getAndEraseElement(GPXData, "trkpt");
+        temp = getAndEraseElement(inData, "trkpt");
         if (! attributeExists(temp,"lat"))
         {
             throw domain_error("No 'lat' attribute.");
@@ -198,7 +230,7 @@ Track::Track(std::string source, bool isFileName, metres granularity)
         {
             // If we're still at the same location, then we haven't departed yet.
             departed.back() = currentTime - startTime;
-            reportStream << "Position ignored: " << nextPos.toString() << endl;
+            report << "Position ignored: " << nextPos.toString() << endl;
         }
         else
         {
@@ -216,37 +248,13 @@ Track::Track(std::string source, bool isFileName, metres granularity)
             timeElapsed = currentTime - startTime;
             arrived.push_back(timeElapsed);
             departed.push_back(timeElapsed);
-            reportStream << "Position added: " << nextPos.toString() << endl;
-            reportStream << " at time: " << to_string(timeElapsed) << endl;
-            ++num;
+            report << "Position added: " << nextPos.toString() << endl;
+            report << " at time: " << to_string(timeElapsed) << endl;
             prevPos = nextPos;
         }
     }
-    reportStream << num << " positions added." << endl;
-    routeLength = 0;
-    for (unsigned int i = 1; i < num; ++i )
-    {
-        deltaH = distanceBetween(positions[i-1], positions[i]);
-        deltaV = positions[i-1].elevation() - positions[i].elevation();
-        routeLength += sqrt(pow(deltaH,2) + pow(deltaV,2));
-    }
-    report = reportStream.str();
-
-
-    //Test temp
-    ifstream load(routeName + "save.txt");
-    stringstream ss;
-    ss << load.rdbuf();
-    load.close();
-    if (report != ss.str())
-    {
-        throw domain_error("Report wrong");
-    }
-    else
-    {
-        cout <<"Report success"<<endl;
-    }
-
+    report << positions.size() << " positions added." << endl;
+    //END
 }
 
 void Track::setGranularity(metres granularity)

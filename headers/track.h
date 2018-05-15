@@ -60,6 +60,10 @@ namespace GPS
       std::vector<seconds> departed;
 
       static seconds stringToTime(const std::string &);
+
+      void checkValidType(std::string& inData) override;
+      void setName(std::string& inData, std::ostringstream& report) override;
+      void addGPXPositions(std::string& inData, std::ostringstream& report) override;
   };
 }
 
