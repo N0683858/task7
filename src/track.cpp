@@ -87,20 +87,6 @@ Track::Track(std::string source, bool isFileName, metres granularity)
     calculateRouteLength();
     //Set report to report stream we created
     report = reportStream.str();
-
-    //Test temp
-    ifstream load(routeName + "save.txt");
-    stringstream ss;
-    ss << load.rdbuf();
-    load.close();
-    if (report != ss.str())
-    {
-        throw domain_error("Report wrong\n" + report);
-    }
-    else
-    {
-        cout <<"Report success"<<endl;
-    }
 }
 
 void Track::checkValidType(string& inData)
@@ -129,132 +115,92 @@ void Track::addGPXPositions(std::string& inData, std::ostringstream& report)
      */
     validateHeader(inData, report);
     //Loops through data and adds positions to route
-
-
-
-    //START
-    string mergedTrkSegs,trkseg,lat,lon,ele,name,time,temp,temp2;
-
+    string mergedTrkSegs,lat,lon,ele,data;
     seconds startTime, currentTime, timeElapsed;
+    Position nextPos(0,0), prevPos(0,0);
+    bool first = 1;
     while (elementExists(inData, "trkseg"))
     {
-        temp = getAndEraseElement(inData, "trkseg");
-        trkseg = getElementContent(temp);
-        getAndEraseElement(trkseg, "name");
-        mergedTrkSegs += trkseg;
+        data = getAndEraseElement(inData, "trkseg");
+        data = getElementContent(data);
+        getAndEraseElement(data, "name");
+        mergedTrkSegs += data;
     }
-    if (! mergedTrkSegs.empty())
+    if (!mergedTrkSegs.empty())
     {
         inData = mergedTrkSegs;
     }
-    if (! elementExists(inData,"trkpt"))
+
+    if (!elementExists(inData,"trkpt"))
     {
         throw domain_error("No 'trkpt' element.");
     }
-    temp = getAndEraseElement(inData, "trkpt");
-    if (! attributeExists(temp,"lat"))
-    {
-        throw domain_error("No 'lat' attribute.");
-    }
-
-    if (! attributeExists(temp,"lon"))
-    {
-        throw domain_error("No 'lon' attribute.");
-    }
-    lat = getElementAttribute(temp, "lat");
-    lon = getElementAttribute(temp, "lon");
-    temp = getElementContent(temp);
-
-    if (elementExists(temp, "ele"))
-    {
-        temp2 = getElement(temp, "ele");
-        ele = getElementContent(temp2);
-        Position startPos = Position(lat,lon,ele);
-        positions.push_back(startPos);
-        report << "Start position added: " << startPos.toString() << endl;
-    }
-    else
-    {
-        Position startPos = Position(lat,lon);
-        positions.push_back(startPos);
-        report << "Start position added: " << startPos.toString() << endl;
-    }
-    if (elementExists(temp,"name"))
-    {
-        temp2 = getElement(temp,"name");
-        name = getElementContent(temp2);
-    }
-    positionNames.push_back(name);
-    arrived.push_back(0);
-    departed.push_back(0);
-    if (! elementExists(temp,"time"))
-    {
-        throw domain_error("No 'time' element.");
-    }
-    temp2 = getElement(temp,"time");
-    time = getElementContent(temp2);
-    startTime = currentTime = stringToTime(time);
-    Position prevPos = positions.back(), nextPos = positions.back();
     while (elementExists(inData, "trkpt"))
     {
-        temp = getAndEraseElement(inData, "trkpt");
-        if (! attributeExists(temp,"lat"))
+        data = getAndEraseElement(inData, "trkpt");
+        if (!attributeExists(data,"lat"))
         {
             throw domain_error("No 'lat' attribute.");
         }
-        if (! attributeExists(temp,"lon"))
+        if (!attributeExists(data,"lon"))
         {
             throw domain_error("No 'lon' attribute.");
         }
-        lat = getElementAttribute(temp, "lat");
-        lon = getElementAttribute(temp, "lon");
-        temp = getElementContent(temp);
-        if (elementExists(temp, "ele"))
+        lat = getElementAttribute(data, "lat");
+        lon = getElementAttribute(data, "lon");
+        data = getElementContent(data);
+        if (elementExists(data, "ele"))
         {
-            temp2 = getElement(temp, "ele");
-            ele = getElementContent(temp2);
+            ele = getElementContent(getElement(data, "ele"));
             nextPos = Position(lat,lon,ele);
         }
         else
         {
             nextPos = Position(lat,lon);
         }
-        if (! elementExists(temp,"time"))
+        if (!elementExists(data,"time"))
         {
             throw domain_error("No 'time' element.");
         }
-        temp2 = getElement(temp,"time");
-        time = getElementContent(temp2);
-        currentTime = stringToTime(time);
-        if (areSameLocation(nextPos, prevPos))
+        currentTime = stringToTime(getElementContent(getElement(data,"time")));
+        if (!first && areSameLocation(nextPos, prevPos))
         {
             // If we're still at the same location, then we haven't departed yet.
             departed.back() = currentTime - startTime;
             report << "Position ignored: " << nextPos.toString() << endl;
+            continue;
+        }
+        positions.push_back(nextPos);
+        if (first)
+        {
+            startTime = currentTime;
+        }
+        timeElapsed = currentTime - startTime;
+        arrived.push_back(timeElapsed);
+        departed.push_back(timeElapsed);
+        if (first)
+        {
+            report << "Start position added: " << nextPos.toString() << endl;
+            prevPos = positions.back();
+            nextPos = positions.back();
+            first = 0;
         }
         else
         {
-            if (elementExists(temp,"name"))
-            {
-                temp2 = getElement(temp,"name");
-                name = getElementContent(temp2);
-            }
-            else
-            {
-                name = ""; // Fixed bug by adding this.
-            }
-            positions.push_back(nextPos);
-            positionNames.push_back(name);
-            timeElapsed = currentTime - startTime;
-            arrived.push_back(timeElapsed);
-            departed.push_back(timeElapsed);
             report << "Position added: " << nextPos.toString() << endl;
-            report << " at time: " << to_string(timeElapsed) << endl;
             prevPos = nextPos;
+            report << " at time: " << to_string(timeElapsed) << endl;
+        }
+        if (elementExists(data,"name"))
+        {
+            positionNames.push_back(getElementContent(getElement(data,"name")));
+        }
+        else
+        {
+            positionNames.push_back("");
         }
     }
     report << positions.size() << " positions added." << endl;
-    //END
 }
 
 void Track::setGranularity(metres granularity)
